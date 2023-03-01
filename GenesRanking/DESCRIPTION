@@ -1,0 +1,47 @@
+Package: GenesRanking
+Title: A package for identifying biomarkers in scRNA-seq data
+Version: 0.1.0
+Author: Petros Paplomatas [aut, cre],
+  Aristidis Vrahatis [aut]
+Maintainer: Petros Paplomatas <p.paplomatas@hotmail.com>
+Description: GenesRanking is an R package for identifying biomarkers in scRNA-seq data. It provides several feature selection methods, including ModalFilter, SelfE, DUBStepR, scPNMF, and M3Drop.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+  SCMarker,
+  SingleCellExperiment,
+  SummarizedExperiment,
+  scPNMF,
+  M3Drop,
+  SelfE,
+  DUBStepR,
+  caret,
+  Seurat,
+  DESeq2,
+  MAST,
+  edgeR,
+  scater,
+  enrichR,
+  dplyr,
+  magrittr,
+  tidyr,
+  stats,
+  remotes
+Remotes:
+  KChen-lab/SCMarker,
+  nghiavtr/BPSC,
+  Priyadarshini-Rai/SelfE
+Suggests:
+    knitr,
+    rmarkdown,
+    randomForest,
+    C50,
+    glmnet,
+    testthat (>= 3.0.0)
+Depends: 
+    R (>= 4.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
