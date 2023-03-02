@@ -1,4 +1,4 @@
-# GenesRanking
+# GenesRanking <img align="right" src="man/figures/logo.svg" style="height:100px;" />
 
 ---
 title: "GenesRanking_vignette"
@@ -9,12 +9,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 # GenesRanking
 
   - [GenesRanking](#GenesRanking)
