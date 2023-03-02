@@ -16,10 +16,10 @@ Our package offers a comprehensive set of tools to facilitate the user's first e
 To analyze the data, the user may choose from a range of four key approaches, including variable gene methods, machine learning, and statistical methods. However, before applying any analysis techniques, data preprocessing steps such as normalization and/or noise reduction may be required to improve data quality and reliability.
 
 ### Installation
-
+```{
 install.packages("BiocManager")
 BiocManager::install("GenesRanking")
-
+```
 ### Usage-example
 
 To demonstrate the use of our package, we first loaded the necessary libraries and example dataset.
