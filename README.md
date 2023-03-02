@@ -1,15 +1,5 @@
 # GenesRanking <img align="right" src="man/figures/logo.svg" style="height:100px;" />
 
----
-title: "GenesRanking_vignette"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{GenesRanking_vignette}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-# GenesRanking
 
   - [GenesRanking](#GenesRanking)
   - [Introduction](#Introduction)
