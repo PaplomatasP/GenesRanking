@@ -33,7 +33,8 @@ To analyze the data, the user may choose from a range of four key approaches, in
 
 ### Installation
 
-
+install.packages("BiocManager")
+BiocManager::install("GenesRanking")
 
 ### Usage-example
 
