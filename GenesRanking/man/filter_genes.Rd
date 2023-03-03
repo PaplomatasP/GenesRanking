@@ -27,6 +27,6 @@ This function performs a statistical filtering method on gene expression data. I
 \examples{
 \donttest{
 data(ExampleDataset)
-data_filtered <- filter_genes(data=ExampleDataset,filter_method="High_Variable_Genes",n_features= 100)
+data_filtered <- filter_genes(ExampleDataset,filter_method="High_Variable_Genes",n_features= 100)
 }
 }

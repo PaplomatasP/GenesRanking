@@ -7,7 +7,6 @@
 #' @param data A numeric matrix of gene expression values with rows representing genes and columns representing cells.
 #' @param method A character string specifying the feature selection method to be used. The valid options are "SCMarker", "SelfE", "DUBStepR", "scPNMF", or "M3Drop".
 #' @param ... Additional arguments that are required for the specific feature selection method chosen.
-#'
 #' @return A list with two elements: \code{FilterData} and \code{Important_Features}.
 #' \code{FilterData} is a numeric matrix of gene expression values with rows representing genes and columns representing cells, after the feature selection process.
 #' \code{Important_Features} is a vector of important genes selected by the feature selection method.
@@ -43,10 +42,10 @@ Variable_Filter <- function(data,method, ...) {
     result <- scDDfun(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),Labels,nGenes=150)
 
   }else if (method == "SIMLR") {
-    result <- scDDfun(data,ClusterNumber,cores.Ratio=0,nGenes=150)
+    result <- scDDfun(data,ClusterNumber=3,nGenes=150)
 
   }else if (method == "scmap") {
-    result <- scmapfun(data,Labels,nGenes=150)
+    result <- scmapfun(data,Labels=Labels,nGenes=150)
   }else {
     stop("Invalid method selected.")
   }

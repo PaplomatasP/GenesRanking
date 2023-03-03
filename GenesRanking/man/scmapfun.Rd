@@ -10,7 +10,7 @@ scmapfun(data, Labels, nGenes)
 \item{data}{A matrix or data frame containing the gene expression data for the single cells.
 Rows represent genes, and columns represent cells.}
 
-\item{Labels}{A data frame containing the cell labels.
+\item{Labels}{A vector containing the cell labels.
 Rows represent cells, and columns represent metadata associated with the cells (e.g.,
 sample ID, batch, cell type, etc.).}
 

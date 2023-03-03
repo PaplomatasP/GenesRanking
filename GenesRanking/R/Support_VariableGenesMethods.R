@@ -239,7 +239,7 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
   Genes=RES$gene[1:nGenes]
   FilterData = data[ rownames(data) %in%  Genes,]
 
-  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=RES) ))
+  return(list(FilterData=FilterData,Important_Features=Genes,Results=RES) )
 }
 
 #' Run SIMLR clustering and feature ranking on single-cell RNA-seq data
@@ -251,7 +251,6 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
 #'
 #' @param data A matrix of gene expression values, where rows represent genes and columns represent cells.
 #' @param ClusterNumber The number of cell clusters to identify.
-#' @param cores.Ratio The ratio of cores to use for parallel processing. Default is 0, which indicates
 #' that all available cores should be used.
 #' @param nGenes The number of top-ranked genes to return. Default is 150.
 #'
@@ -259,16 +258,16 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
 #' and the SIMLR feature ranking results.
 #'
 #' @importFrom SIMLR SIMLR SIMLR_Feature_Ranking
-SIMLRFun=function(data,ClusterNumber,cores.Ratio=0,nGenes=150){
+SIMLRFun=function(data,ClusterNumber=3,nGenes=150){
 
-  RunSIMLR = SIMLR(X = data, c = ClusterNumber, cores.ratio = cores.Ratio)
+  RunSIMLR = SIMLR(X = data, c = ClusterNumber, cores.ratio = 2)
   Rank=SIMLR_Feature_Ranking(A=RunSIMLR[["S"]],X=data)
   Rank$aggR = rownames(data)[Rank$aggR]
 
   Genes=Rank$aggR[1:nGenes]
   FilterData = data[ rownames(data) %in%  Genes,]
 
-  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=Rank) ))
+  return(list(FilterData=FilterData,Important_Features=Genes,Results=Rank) )
 
 }
 
@@ -284,7 +283,7 @@ SIMLRFun=function(data,ClusterNumber,cores.Ratio=0,nGenes=150){
 #' @param data A matrix or data frame containing the gene expression data for the single cells.
 #' Rows represent genes, and columns represent cells.
 #'
-#' @param Labels A data frame containing the cell labels.
+#' @param Labels A vector containing the cell labels.
 #' Rows represent cells, and columns represent metadata associated with the cells (e.g.,
 #' sample ID, batch, cell type, etc.).
 #'
@@ -301,6 +300,7 @@ SIMLRFun=function(data,ClusterNumber,cores.Ratio=0,nGenes=150){
 #' }
 #'
 #' @importFrom scmap selectFeatures
+#' @importFrom SummarizedExperiment rowData
 scmapfun=function(data,Labels,nGenes){
   sce <- SingleCellExperiment(assays = list(normcounts = as.matrix(data)), colData = Labels)
   logcounts(sce) <- data
@@ -321,5 +321,5 @@ scmapfun=function(data,Labels,nGenes){
 
   FilterData = data[ rownames(data) %in%  Genes,]
 
-  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=Res) ))
+  return(list(FilterData=FilterData,Important_Features=Genes,Results=Res) )
 }

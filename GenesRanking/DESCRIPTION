@@ -29,15 +29,10 @@ Imports:
   magrittr,
   tidyr,
   stats,
-  remotes,
   BPSC,
   scDD,
   SIMLR,
   scmap
-Remotes:
-  KChen-lab/SCMarker,
-  nghiavtr/BPSC,
-  Priyadarshini-Rai/SelfE
 Suggests:
     knitr,
     rmarkdown,
