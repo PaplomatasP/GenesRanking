@@ -29,7 +29,11 @@ Imports:
   magrittr,
   tidyr,
   stats,
-  remotes
+  remotes,
+  BPSC,
+  scDD,
+  SIMLR,
+  scmap
 Remotes:
   KChen-lab/SCMarker,
   nghiavtr/BPSC,

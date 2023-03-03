@@ -205,3 +205,121 @@ M3Dropfun = function(data,Mt_Method,Mt_threshold) {
   return(list(FilterData=FilterData,Important_Features=rownames(DropsGenes),DropsGenes=DropsGenes) )
 }
 
+#' Differential expression analysis using the scDD method
+#'
+#' This function performs differential expression analysis on single-cell RNA sequencing data using the scDD method. It takes as input a count matrix, a list of prior parameters, and a vector of condition labels. The function returns a list of filtered data, important features, and results of the analysis.
+#'
+#' @param data A numeric matrix of raw count data.
+#' @param prior_param A list of prior parameters used for Bayesian inference. Default values are alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01.
+#' @param Labels A vector of condition labels corresponding to the columns of the count matrix.
+#' @param nGenes The number of top-ranked genes to return. Default is 150.
+#'
+#' @return A list with the following components:
+#' \item{FilterData}{A filtered version of the input data, retaining only genes that were found to be differentially expressed.}
+#' \item{Important_Features}{A vector of the names of the genes that were found to be differentially expressed.}
+#' \item{Results}{A data frame with the results of the differential expression analysis.}
+#'
+#' @importFrom SingleCellExperiment SingleCellExperiment
+#' @importFrom scDD scDD
+scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),Labels,nGenes=150) {
+  obj = as.matrix(data)
+
+  condition <- Labels
+
+  sce <- SingleCellExperiment(assays= list(normcounts=obj, Counts=obj), colData=(condition))
+  names(sce@colData@listData) <- "condition"
+
+  ## ----main engine-----------------------------------------------------------
+  scDatExSim <- scDD(sce, prior_param=prior_param, testZeroes=FALSE)
+
+  ## ----main results----------------------------------------------------------
+  RES <- results(scDatExSim)
+  RES <- RES[order(RES$nonzero.pvalue.adj), ]
+
+  Genes=RES$gene[1:nGenes]
+  FilterData = data[ rownames(data) %in%  Genes,]
+
+  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=RES) ))
+}
+
+#' Run SIMLR clustering and feature ranking on single-cell RNA-seq data
+#'
+#' This function runs the SIMLR algorithm on single-cell RNA-seq data to identify cell clusters
+#' and rank the most informative genes. The function takes as input a matrix of gene expression
+#' values, the number of clusters to identify, the ratio of cores to use for parallel processing,
+#' and the number of top-ranked genes to return.
+#'
+#' @param data A matrix of gene expression values, where rows represent genes and columns represent cells.
+#' @param ClusterNumber The number of cell clusters to identify.
+#' @param cores.Ratio The ratio of cores to use for parallel processing. Default is 0, which indicates
+#' that all available cores should be used.
+#' @param nGenes The number of top-ranked genes to return. Default is 150.
+#'
+#' @return A list containing the filtered gene expression data, the list of top-ranked genes,
+#' and the SIMLR feature ranking results.
+#'
+#' @importFrom SIMLR SIMLR SIMLR_Feature_Ranking
+SIMLRFun=function(data,ClusterNumber,cores.Ratio=0,nGenes=150){
+
+  RunSIMLR = SIMLR(X = data, c = ClusterNumber, cores.ratio = cores.Ratio)
+  Rank=SIMLR_Feature_Ranking(A=RunSIMLR[["S"]],X=data)
+  Rank$aggR = rownames(data)[Rank$aggR]
+
+  Genes=Rank$aggR[1:nGenes]
+  FilterData = data[ rownames(data) %in%  Genes,]
+
+  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=Rank) ))
+
+}
+
+
+#' Perform feature selection and identify important features using scmap
+#'
+#' This function performs feature selection and identifies important features based
+#' on the output of the scmap package. The scmap package is used to find the most
+#' informative genes for separating two groups of cells, and these genes are selected
+#' as important features. The function returns a list containing the filtered data,
+#' the list of important features, and the results of the scmap analysis.
+#'
+#' @param data A matrix or data frame containing the gene expression data for the single cells.
+#' Rows represent genes, and columns represent cells.
+#'
+#' @param Labels A data frame containing the cell labels.
+#' Rows represent cells, and columns represent metadata associated with the cells (e.g.,
+#' sample ID, batch, cell type, etc.).
+#'
+#' @param nGenes An integer specifying the number of genes to select as important features.
+#'
+#' @return A list containing the following items:
+#' \describe{
+#'   \item{FilterData}{A matrix containing the filtered gene expression data. Rows represent genes,
+#'   and columns represent cells. Only the nGenes genes selected as important features are included.}
+#'   \item{Important_Features}{A character vector containing the names of the nGenes genes selected
+#'   as important features.}
+#'   \item{Results}{A data frame containing the output of the scmap analysis. Rows represent genes,
+#'   and columns represent various statistics (e.g., scores, p-values, etc.) calculated by scmap.}
+#' }
+#'
+#' @importFrom scmap selectFeatures
+scmapfun=function(data,Labels,nGenes){
+  sce <- SingleCellExperiment(assays = list(normcounts = as.matrix(data)), colData = Labels)
+  logcounts(sce) <- data
+  rowData(sce)$feature_symbol <- rownames(sce)
+  # remove features with duplicated names
+  sce <- sce[!duplicated(rownames(sce)), ]
+
+
+  sce <- selectFeatures(sce, suppress_plot = TRUE,n_features = nGenes)
+
+  Res=as.data.frame(rowData(sce) )
+
+  ResTRUE=subset(Res,Res$scmap_features==TRUE)
+  ResTRUE=ResTRUE[order(ResTRUE$scmap_scores,decreasing = TRUE), ]
+
+  Genes=rownames(ResTRUE)
+
+
+  FilterData = data[ rownames(data) %in%  Genes,]
+
+  return(return(list(FilterData=FilterData,Important_Features=Genes,Results=Res) ))
+}

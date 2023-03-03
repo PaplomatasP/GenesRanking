@@ -39,11 +39,20 @@ Variable_Filter <- function(data,method, ...) {
   } else if (method == "M3Drop") {
     result <- M3Dropfun(data,Mt_threshold=0.05,Mt_Method="fdr")
 
-  } else {
+  }else if (method == "scDD") {
+    result <- scDDfun(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),Labels,nGenes=150)
+
+  }else if (method == "SIMLR") {
+    result <- scDDfun(data,ClusterNumber,cores.Ratio=0,nGenes=150)
+
+  }else if (method == "scmap") {
+    result <- scmapfun(data,Labels,nGenes=150)
+  }else {
     stop("Invalid method selected.")
   }
 
 
-
   return(result)
 }
+
+
