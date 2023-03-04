@@ -26,7 +26,6 @@ Imports:
   scater,
   enrichR,
   dplyr,
-  magrittr,
   tidyr,
   stats,
   BPSC,

@@ -7,7 +7,7 @@
 scDDfun(
   data,
   prior_param = list(alpha = 0.01, mu0 = 0, s0 = 0.01, a0 = 0.01, b0 = 0.01),
-  Labels,
+  labels,
   nGenes = 150
 )
 }
@@ -16,7 +16,7 @@ scDDfun(
 
 \item{prior_param}{A list of prior parameters used for Bayesian inference. Default values are alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01.}
 
-\item{Labels}{A vector of condition labels corresponding to the columns of the count matrix.}
+\item{labels}{A vector of condition labels corresponding to the columns of the count matrix.}
 
 \item{nGenes}{The number of top-ranked genes to return. Default is 150.}
 }

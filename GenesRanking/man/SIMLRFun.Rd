@@ -4,12 +4,12 @@
 \alias{SIMLRFun}
 \title{Run SIMLR clustering and feature ranking on single-cell RNA-seq data}
 \usage{
-SIMLRFun(data, ClusterNumber = 3, nGenes = 150)
+SIMLRFun(data, ClusterNumber, nGenes)
 }
 \arguments{
 \item{data}{A matrix of gene expression values, where rows represent genes and columns represent cells.}
 
-\item{ClusterNumber}{The number of cell clusters to identify.
+\item{ClusterNumber}{number of clusters to be estimated over your data.
 that all available cores should be used.}
 
 \item{nGenes}{The number of top-ranked genes to return. Default is 150.}

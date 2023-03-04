@@ -7,7 +7,6 @@
 #' @return A data frame containing the enriched terms and associated statistics
 #' @importFrom enrichR enrichr
 #' @import dplyr
-#' @import magrittr
 #' @import tidyr
 #' @export
 #' @examples
@@ -17,7 +16,8 @@
 #' }
 Ontology_Analysis=function(Important_Features,Ontology_Terms){
    requireNamespace("enrichR", quietly = TRUE)
-   options(websiteLive = TRUE)
+   websiteLive = TRUE
+  # suppressPackageStartupMessages(require(enrichR))
   dbs <-
     c(
       "KEGG_2021_Human",

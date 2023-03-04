@@ -4,13 +4,13 @@
 \alias{scmapfun}
 \title{Perform feature selection and identify important features using scmap}
 \usage{
-scmapfun(data, Labels, nGenes)
+scmapfun(data, labels, nGenes)
 }
 \arguments{
 \item{data}{A matrix or data frame containing the gene expression data for the single cells.
 Rows represent genes, and columns represent cells.}
 
-\item{Labels}{A vector containing the cell labels.
+\item{labels}{A vector containing the cell labels.
 Rows represent cells, and columns represent metadata associated with the cells (e.g.,
 sample ID, batch, cell type, etc.).}
 

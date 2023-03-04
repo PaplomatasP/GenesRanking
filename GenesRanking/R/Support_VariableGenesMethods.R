@@ -211,7 +211,7 @@ M3Dropfun = function(data,Mt_Method,Mt_threshold) {
 #'
 #' @param data A numeric matrix of raw count data.
 #' @param prior_param A list of prior parameters used for Bayesian inference. Default values are alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01.
-#' @param Labels A vector of condition labels corresponding to the columns of the count matrix.
+#' @param labels A vector of condition labels corresponding to the columns of the count matrix.
 #' @param nGenes The number of top-ranked genes to return. Default is 150.
 #'
 #' @return A list with the following components:
@@ -221,10 +221,10 @@ M3Dropfun = function(data,Mt_Method,Mt_threshold) {
 #'
 #' @importFrom SingleCellExperiment SingleCellExperiment
 #' @importFrom scDD scDD
-scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),Labels,nGenes=150) {
+scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),labels,nGenes=150) {
   obj = as.matrix(data)
 
-  condition <- Labels
+  condition <- labels
 
   sce <- SingleCellExperiment(assays= list(normcounts=obj, Counts=obj), colData=(condition))
   names(sce@colData@listData) <- "condition"
@@ -233,7 +233,7 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
   scDatExSim <- scDD(sce, prior_param=prior_param, testZeroes=FALSE)
 
   ## ----main results----------------------------------------------------------
-  RES <- results(scDatExSim)
+  RES <- scDD::results(scDatExSim)
   RES <- RES[order(RES$nonzero.pvalue.adj), ]
 
   Genes=RES$gene[1:nGenes]
@@ -250,7 +250,7 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
 #' and the number of top-ranked genes to return.
 #'
 #' @param data A matrix of gene expression values, where rows represent genes and columns represent cells.
-#' @param ClusterNumber The number of cell clusters to identify.
+#' @param ClusterNumber number of clusters to be estimated over your data.
 #' that all available cores should be used.
 #' @param nGenes The number of top-ranked genes to return. Default is 150.
 #'
@@ -258,9 +258,9 @@ scDDfun = function(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0
 #' and the SIMLR feature ranking results.
 #'
 #' @importFrom SIMLR SIMLR SIMLR_Feature_Ranking
-SIMLRFun=function(data,ClusterNumber=3,nGenes=150){
+SIMLRFun=function(data,ClusterNumber,nGenes){
 
-  RunSIMLR = SIMLR(X = data, c = ClusterNumber, cores.ratio = 2)
+  RunSIMLR = SIMLR(X = data, c = ClusterNumber, cores.ratio = 0)
   Rank=SIMLR_Feature_Ranking(A=RunSIMLR[["S"]],X=data)
   Rank$aggR = rownames(data)[Rank$aggR]
 
@@ -283,7 +283,7 @@ SIMLRFun=function(data,ClusterNumber=3,nGenes=150){
 #' @param data A matrix or data frame containing the gene expression data for the single cells.
 #' Rows represent genes, and columns represent cells.
 #'
-#' @param Labels A vector containing the cell labels.
+#' @param labels A vector containing the cell labels.
 #' Rows represent cells, and columns represent metadata associated with the cells (e.g.,
 #' sample ID, batch, cell type, etc.).
 #'
@@ -301,17 +301,17 @@ SIMLRFun=function(data,ClusterNumber=3,nGenes=150){
 #'
 #' @importFrom scmap selectFeatures
 #' @importFrom SummarizedExperiment rowData
-scmapfun=function(data,Labels,nGenes){
-  sce <- SingleCellExperiment(assays = list(normcounts = as.matrix(data)), colData = Labels)
+scmapfun=function(data,labels,nGenes){
+  sce <- SingleCellExperiment(assays = list(normcounts = as.matrix(data)), colData = labels)
   logcounts(sce) <- data
-  rowData(sce)$feature_symbol <- rownames(sce)
+  SummarizedExperiment::rowData(sce)$feature_symbol <- rownames(sce)
   # remove features with duplicated names
   sce <- sce[!duplicated(rownames(sce)), ]
 
 
   sce <- selectFeatures(sce, suppress_plot = TRUE,n_features = nGenes)
 
-  Res=as.data.frame(rowData(sce) )
+  Res=as.data.frame(SummarizedExperiment::rowData(sce) )
 
   ResTRUE=subset(Res,Res$scmap_features==TRUE)
   ResTRUE=ResTRUE[order(ResTRUE$scmap_scores,decreasing = TRUE), ]

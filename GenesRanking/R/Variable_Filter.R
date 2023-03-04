@@ -39,13 +39,13 @@ Variable_Filter <- function(data,method, ...) {
     result <- M3Dropfun(data,Mt_threshold=0.05,Mt_Method="fdr")
 
   }else if (method == "scDD") {
-    result <- scDDfun(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),Labels,nGenes=150)
+    result <- scDDfun(data,prior_param=list(alpha=0.01, mu0=0, s0=0.01, a0=0.01, b0=0.01),labels,nGenes=150)
 
   }else if (method == "SIMLR") {
-    result <- scDDfun(data,ClusterNumber=3,nGenes=150)
+    result <- SIMLRFun(data,ClusterNumber=3,nGenes=150)
 
   }else if (method == "scmap") {
-    result <- scmapfun(data,Labels=Labels,nGenes=150)
+    result <- scmapfun(data,labels,nGenes=150)
   }else {
     stop("Invalid method selected.")
   }
