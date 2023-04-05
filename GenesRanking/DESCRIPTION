@@ -1,0 +1,51 @@
+Package: GenesRanking
+Title: A package for identifying biomarkers in scRNA-seq data
+Version: 0.1.0
+Authors@R: c(
+  person("Petros", "Paplomatas", email = "p.paplomatas@hotmail.com", role = c("cre","aut" ),comment = c(ORCID = "0000-0002-2691-2767")),
+  person("Aristidis", "Vrahatis", email = "avrahatis@math.uoa.gr", role = "aut"))
+Description: GenesRanking is a comprehensive R package designed for the identification of biomarkers from single-cell RNA sequencing data. It provides a suite of functions for preprocessing, statistical analysis, and machine learning to extract meaningful gene expression patterns and identify potential biomarkers. The package includes tools for gene filtering, normalization,  differential expression analysis, and pathway analysis, as well as various machine learning models for classification and prediction. GenesRanking aims to facilitate the identification of key genes and pathways that are dysregulated in different cell types or disease states, thereby providing new insights into biological processes and potential therapeutic targets.
+License: GPL-3
+Encoding: UTF-8
+LazyData: false
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+  SingleCellExperiment,
+  SummarizedExperiment,
+  caret,
+  Seurat,
+  DESeq2,
+  MAST,
+  edgeR,
+  scater,
+  stats,
+  BPSC,
+  clusterProfiler,
+  org.Hs.eg.db,
+  org.Mm.eg.db,
+  AnnotationDbi,
+  utils 
+Suggests:
+    knitr,
+    rmarkdown,
+    randomForest,
+    C50,
+    glmnet,
+    testthat (>= 3.0.0)
+Depends: 
+    R (>= 4.2.0)
+biocViews: SingleCell,
+    DifferentialExpression, 
+    RNASeq, 
+    GeneExpression, 
+    Transcriptomics,
+    Sequencing,
+    GenePrediction,
+    Pathways,
+    Normalization,
+    Preprocessing,
+    Classification,
+    SupportVectorMachine
+Config/testthat/edition: 3
+VignetteBuilder: knitr
