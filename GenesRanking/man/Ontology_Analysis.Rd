@@ -11,32 +11,30 @@ Ontology_Analysis(
 )
 }
 \arguments{
-\item{Important_Features}{A character vector containing the names of the important features (e.g., genes)}
+\item{Important_Features}{A character vector containing the names of the
+important features (e.g., genes)}
 
-\item{ontology_type}{A character string indicating the ontology type to be used. It can be one of the following: "KEGG" (default), "GO", "MKEGG".}
+\item{ontology_type}{A character string indicating the ontology type to be
+used. It can be one of the following: "KEGG" (default), "GO", "MKEGG".}
 
-\item{organism}{A character string indicating the organism to be used. It can be either "human" (default) or "mouse".}
+\item{organism}{A character string indicating the organism to be used. It can
+be either "human" (default) or "mouse".}
 }
 \value{
 A data frame containing the enriched terms and associated statistics
 }
 \description{
-This function performs ontology analysis using clusterProfiler. The user provides a set of important features (e.g., genes), the ontology type to be used (e.g., "KEGG", "GO", "MKEGG"), and the organism (e.g., "human" or "mouse").
+This function performs ontology analysis using clusterProfiler. The user
+provides a set of important features (e.g., genes), the ontology type to be
+used (e.g., "KEGG", "GO", "MKEGG"), and the organism (e.g., "human" or "mouse").
 }
 \examples{
-\donttest{
 # Example with human KEGG pathways
 data(FilterData)
-ontology_results <- Ontology_Analysis(Important_Features = FilterData$Important_Features,
-                                      ontology_type = "KEGG",
-                                      organism = "human")
-# Example with mouse Gene Ontology (GO) terms
-ontology_results <- Ontology_Analysis(Important_Features = FilterData$Important_Features,
-                                      ontology_type = "GO",
-                                      organism = "mouse")
 # Example with mouse KEGG Module (MKEGG) terms
-ontology_results <- Ontology_Analysis(Important_Features = FilterData$Important_Features,
-                                      ontology_type = "MKEGG",
-                                      organism = "mouse")
-}
+ontology_results <- Ontology_Analysis(
+  Important_Features <- FilterData$Important_Features,
+  ontology_type <- "MKEGG",
+  organism <- "mouse"
+)
 }

@@ -18,20 +18,31 @@ PvalueCalc(
 \arguments{
 \item{data}{a SummarizedExperiment object containing gene expression data}
 
-\item{Pvaluemethod}{a character string specifying the method to be used for calculating p-values and FDRs. Possible values are "Seurat_method", "BPSC_metchod", "DESeq2_method", and "MAST_method".}
+\item{Pvaluemethod}{a character string specifying the method to be used for
+calculating p-values and FDRs. Possible values are "Seurat_method",
+"BPSC_metchod", "DESeq2_method", and "MAST_method".}
 
 \item{Labels}{a vector of group labels for the samples in the data object}
 
-\item{Test}{a character string specifying the test to be used in the DESeq2 method. Default is "LRT".}
+\item{Test}{a character string specifying the test to be used in the
+DESeq2 method. Default is "LRT".}
 
-\item{dmethod}{a character string specifying the method to be used in the Seurat method. Default is "bimod".}
+\item{dmethod}{a character string specifying the method to be used in the
+Seurat method. Default is "bimod".}
 
-\item{DESeq2.test}{a character string specifying the test to be used in the DESeq2 method. Default is "LRT".}
+\item{DESeq2.test}{a character string specifying the test to be used in the
+DESeq2 method. Default is "LRT".}
 
-\item{method_MAST}{a character string specifying the method to be used in the MAST method. Default is "bayesglm".}
+\item{method_MAST}{a character string specifying the method to be used in
+the MAST method. Default is "bayesglm".}
 
-\item{MAST.parallel}{a logical value indicating whether parallel computing should be used in the MAST method. Default is TRUE.}
+\item{MAST.parallel}{a logical value indicating whether parallel computing
+should be used in the MAST method. Default is TRUE.}
+}
+\value{
+A list with gene_names, pvalue, and FDR values
 }
 \description{
-This function calculates p-values and FDRs for differential expression analysis using different methods.
+This function calculates p-values and FDRs for differential expression
+analysis using different methods.
 }

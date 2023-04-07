@@ -11,10 +11,13 @@ An object of class \code{data.frame} with 2000 rows and 384 columns.
 ExampleDataset
 }
 \value{
-A data.frame object representing gene expression data from single-cell RNA sequencing.
+A data.frame object representing gene expression data from
+single-cell RNA sequencing.
 }
 \description{
-A data.frame object that represents gene expression data from single-cell RNA sequencing. The rows in the data.frame correspond to individual genes, while the columns correspond to individual cells.
+A data.frame object that represents gene expression data from
+single-cell RNA sequencing. The rows in the data.frame correspond to
+individual genes, while the columns correspond to individual cells.
 }
 \examples{
 data(ExampleDataset)

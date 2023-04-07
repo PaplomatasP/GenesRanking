@@ -7,26 +7,43 @@
 Tree_Based_ML(data, Labels, MLmethod, n_genes_to_keep)
 }
 \arguments{
-\item{data}{A numeric matrix of gene expression values with rows representing genes and columns representing cells.}
+\item{data}{A numeric matrix of gene expression values with rows representing
+genes and columns representing cells.}
 
-\item{Labels}{A character or factor vector specifying the label for each cell in \code{data}.}
+\item{Labels}{A character or factor vector specifying the label for each cell
+in \code{data}.}
 
-\item{MLmethod}{A character string specifying the machine learning method to be used. The valid options are "rf", "knn","rpart","C5.0","bartMachine","treebag", or "xgbTree".}
+\item{MLmethod}{A character string specifying the machine learning method to
+be used. The valid options are "rf", "knn","rpart","C5.0","bartMachine",
+"treebag", or "xgbTree".}
 
-\item{n_genes_to_keep}{An integer value that sets the number of top-ranked features to keep. Only the top \code{n_genes_to_keep} features with the highest importance scores will be retained.}
+\item{n_genes_to_keep}{An integer value that sets the number of top-ranked
+features to keep. Only the top \code{n_genes_to_keep} features with the
+highest importance scores will be retained.}
 }
 \value{
-A list with three elements: \code{FilterData}, \code{Important_Features}, and \code{ML_Analysis}.
-\code{FilterData} is a numeric matrix of gene expression values with rows representing genes and columns representing cells, after the feature selection process.
-\code{Important_Features} is a vector of important genes selected by the machine learning-based feature selection method.
-\code{ML_Analysis} is a data frame containing the importance scores for all features used in the machine learning analysis.
+A list with three elements: \code{FilterData},
+\code{Important_Features}, and \code{ML_Analysis}.
+\code{FilterData} is a numeric matrix of gene expression values with rows
+representing genes and columns representing cells, after the feature
+selection process.
+\code{Important_Features} is a vector of important genes selected by the
+machine learning-based feature selection method.
+\code{ML_Analysis} is a data frame containing the importance scores for all
+features used in the machine learning analysis.
 }
 \description{
-This function applies machine learning-based feature selection using tree-based models to single-cell RNA sequencing (scRNA-seq) data. The function takes as input a data matrix, a vector of cell labels, a machine learning method, and additional parameters to configure the machine learning method. The resulting filtered data , important features and the ML analysis are returned as a list.
+This function applies machine learning-based feature selection using
+tree-based models to single-cell RNA sequencing (scRNA-seq) data. The function
+takes as input a data matrix, a vector of cell labels, a machine learning
+method, and additional parameters to configure the machine learning method.
+The resulting filtered data, important features, and the ML analysis are
+returned as a list.
 }
 \examples{
 
 data(ExampleDataset)
-Tree_Based_ML(ExampleDataset[1:10,],Labels,MLmethod = "rf", n_genes_to_keep = 100)
+Tree_Based_ML(head(ExampleDataset, 10), Labels, MLmethod<-"rf",
+  n_genes_to_keep<-8)
 
 }

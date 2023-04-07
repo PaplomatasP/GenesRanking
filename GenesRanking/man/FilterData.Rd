@@ -11,13 +11,16 @@ An object of class \code{list} of length 3.
 FilterData
 }
 \value{
-A matrix or data.frame object representing the gene expression data after it has been filtered or processed in some way.
+A matrix or data.frame object representing the gene expression data
+after it has been filtered or processed in some way.
 }
 \description{
-is a list object that represents the gene expression data after it has been filtered or processed in some way.
+A list object that represents the gene expression data after it
+has been filtered or processed in some way.
 }
 \examples{
 data(FilterData)
+
 }
 \keyword{data}
 \keyword{data,}

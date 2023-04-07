@@ -7,14 +7,19 @@
 data_fitting(data, group, normal.Method)
 }
 \arguments{
-\item{data}{A matrix or data.frame object representing gene expression data. Rows represent genes, and columns represent samples.}
+\item{data}{A matrix or data.frame object representing gene expression data.
+Rows represent genes, and columns represent samples.}
 
 \item{group}{A vector of sample labels.}
 
-\item{normal.Method}{An optional character string indicating the normalization method to use. Default is \code{NULL}.}
+\item{normal.Method}{An optional character string indicating the
+normalization method to use. Default is \code{NULL}.}
 }
 \value{
-A \code{SingleCellExperiment} object containing the gene expression data, sample labels, and optional normalized gene expression data.
+A \code{SingleCellExperiment} object containing the gene expression data,
+sample labels, and optional normalized gene expression data.
+
+A SingleCellExperiment object
 }
 \description{
 Function to create a SingleCellExperiment object
