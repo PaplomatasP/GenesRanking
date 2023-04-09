@@ -22,32 +22,37 @@ knitr::opts_chunk$set(
 
 
 ### Introduction
+The GenesRanking package offers advanced algorithms for feature selection
+in high-dimensional biological data. These include statistical approaches
+and various machine learning methods using tree-based or non-tree-based
+approaches. Additionally, the package provides functions for data
+normalization, pre-processing, and enrichment analysis using the
+clusterProfiler package.
 
-The GenesRanking package offers a range of advanced algorithms for feature
-selection in high-dimensional biological data. These include statistical
-approaches, established methods for identifying variable genes, and a variety
-of machine learning methods using wrapper or tree-based approaches.
-Additionally, the package provides functions for data normalization and
-pre-processing to ensure reliable data analysis, as well as enrichment analysis
-using the clusterProfiler package.
+Our package offers a comprehensive set of tools to facilitate users' first
+experience with single-cell RNA sequencing data analysis through feature
+selection techniques. The ExampleDataset, Labels, and FilterData objects
+are provided to assist users. Labels are character or factor vectors that
+identify each cell in the data matrix, while ExampleDataset is a data.frame
+object capturing gene expression data for individual cells. FilterData is
+a list object containing filtered and/or processed gene expression data.
 
-Our package offers a comprehensive set of tools to facilitate the user's first
-experience with the single-cell RNA sequencing data analysis. Specifically,
-ExampleDataset, Labels, and FilterData are provided to assist the
-user to have his first experience with our package. Labels are character or
-factor vectors that identify each cell in the data matrix, while ExampleDataset
-is a data.frame object that captures the gene expression data for individual
-cells. FilterData, on the other hand, is a list object that contains filtered
-and/or processed gene expression data.
+To analyze the data, users may choose from two key approaches:
+machine learning and statistical methods. However, before applying
+any analysis techniques, data preprocessing steps such as normalization 
+and/or noise reduction may be required to improve data quality, 
+reliability, and to reduce computational time.
 
-To analyze the data, the user may choose from a range of four key approaches,
-including variable gene methods, machine learning, and statistical methods.
-However, before applying any analysis techniques, data preprocessing steps such
-as normalization and/or noise reduction may be required to improve data quality
-and reliability.
 
 ### Installation
-```{r sessionInfo, warning=FALSE, message=FALSE}
+```
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(GenesRanking)
+
+```
+
+```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
 library(GenesRanking)
 sessionInfo()
 ```
@@ -73,9 +78,10 @@ Norm_data=normalize_data(ExpressionData=ExampleDataset,
 # Utilizing a high variability filter serves to increase the reliability of our
 # data by reducing the impact of noisy or irrelevant features.
 data_filtered <- filter_genes(data=ExampleDataset, 
-                 filter_method = "High_Variable_Genes", n_features = 1000)
+                 filter_method = "High_Variable_Genes", n_features = 2000)
 ```
-We have at our disposal four distinct methods for identifying genes with
+
+We have at our disposal three distinct methods for identifying genes with
 dominant expression patterns. For illustrative purposes, we will provide an
 example demonstrating each method.
 
@@ -84,35 +90,45 @@ example demonstrating each method.
 StatisticalFilter <- Statistical_Filter(data_filtered, Pvalue_md = "Waldtest",
                      Labels = Labels, n_genes_to_keep = 100)
 
-#Non_Tree_Based_ML
-result_Non_Tree_Based_ML <- Non_Tree_Based_ML(data_filtered, Labels=Labels,
+#LD_Based_ML
+result_LD_Based_ML <- LD_Based_ML(data_filtered, Labels=Labels,
                                               MLmethod = "knn",  n_genes_to_keep = 100)
 
 #Tree_Based_ML
 result_Tree_Based_ML <- Tree_Based_ML(data_filtered, Labels=Labels, 
                         MLmethod = "C5.0", n_genes_to_keep = 100)
 
+#Boosting_Based_ML
+result_XGBoost_Based_ML <-  Boosting_Based_ML(data_filtered,Labels=Labels, 
+                                     "xgbTree",n_genes_to_keep = 100)
 
 
 ```
 
+
+Let's examine these lists of dominant genes, which can be used for further downstream analysis, such as functional annotation or pathway enrichment analysis.
 ```{r Dominants genes}
-#Dominants genes isolated eache method:
-#Each of the methods has identified 100 dominant genes, with the exception of the variable genes method.
+# Dominant genes identified by each method:
+# Each of the methods has identified 100 dominant genes, providing insights into the most relevant features in the dataset.
 
-head(StatisticalFilter$Important_Features,10)
+# Display the top 10 dominant genes found using the Statistical_Filter method
+head(StatisticalFilter$Important_Features, 10)
 
-head(result_Non_Tree_Based_ML$Important_Features,10)
+# Display the top 10 dominant genes found using the LD_Based_ML method
+head(result_LD_Based_ML$Important_Features, 10)
 
-head(result_Tree_Based_ML$Important_Features,10)
+# Display the top 10 dominant genes found using the Tree_Based_ML method
+head(result_Tree_Based_ML$Important_Features, 10)
+
+# Display the top 10 dominant genes found using the Boosting_Based_ML method
+head(result_XGBoost_Based_ML$Important_Features, 10)
 
 ```
 
-Now, we can perform an enrichment analysis on the identified dominant genes.
-Let's take a look at an example.
+Now, we can perform an enrichment analysis using the GO ontology on the identified dominant genes from the previous methods. Let's take a look at an example.
 ```{r Ontology_Analysis genes, echo=T, message=F, warning=F}
 OntologyAnalysis= Ontology_Analysis(
-  Important_Features = FilterData$Important_Features[1:10],
+  Important_Features = result_XGBoost_Based_ML$Important_Features,
                        ontology_type = "GO",
                        organism = "mouse")
 
