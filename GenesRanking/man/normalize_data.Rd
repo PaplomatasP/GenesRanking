@@ -7,8 +7,8 @@
 normalize_data(ExpressionData, normal_method)
 }
 \arguments{
-\item{ExpressionData}{A Table of gene expression data to be normalized. Rows
-represent genes, and columns represent samples.}
+\item{ExpressionData}{A Matrix of gene expression data to be normalized. Rows
+represent genes, and columns represent Cells.}
 
 \item{normal_method}{A character string specifying the normalization method.
 Possible values are "TMM", "RLE", "CPM", "TPM", and "LogNormalize".}
@@ -23,7 +23,7 @@ methods, including TMM, RLE, CPM, TPM, and LogNormalize.
 \examples{
 
 data(ExampleDataset)
-Norm_data <- normalize_data(ExpressionData <-
- head(ExampleDataset, 100),normal_method <- "LogNormalize")
+Norm_data <- normalize_data(ExpressionData =
+ head(ExampleDataset, 100),normal_method = "LogNormalize")
 
 }

@@ -1,6 +1,12 @@
 library(testthat)
 library(GenesRanking)
 
+#Load availabe data form the GenesRanking Package
+data(FilterData)
+data(ExampleDataset)
+data(Labels)
+
+
 test_that("Statistical_Filter", {
   filtered_data <-
     Statistical_Filter(
@@ -13,16 +19,16 @@ test_that("Statistical_Filter", {
   expect_length(filtered_data, 3)
 })
 
-test_that("Non_Tree_Based_ML", {
-  result_Wrapper_Based_ML <-
-    Non_Tree_Based_ML(
+test_that("LD_Based_ML ", {
+  result_LD_Based_ML <-
+    LD_Based_ML(
       ExampleDataset[1:50, ],
       Labels = Labels,
       MLmethod = "knn",
       n_genes_to_keep = 15
     )
-  expect_type(result_Wrapper_Based_ML, "list")
-  expect_length(result_Wrapper_Based_ML, 3)
+  expect_type(result_LD_Based_ML, "list")
+  expect_length(result_LD_Based_ML, 3)
 })
 
 test_that("Tree_Based_ML", {
@@ -36,6 +42,15 @@ test_that("Tree_Based_ML", {
   expect_type(result_Tree_Based_ML, "list")
   expect_length(result_Tree_Based_ML, 3)
 })
+
+test_that("Boosting_Based_ML", {
+  Boost <- Boosting_Based_ML(ExampleDataset[1:500,],
+                       Labels , "xgbTree", 50)
+
+  expect_type(XBoost, "list")
+  expect_length(XBoost, 3)
+})
+
 
 test_that("Ontology_Analysis", {
   ontology_results <- Ontology_Analysis(

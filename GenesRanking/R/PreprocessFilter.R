@@ -24,7 +24,7 @@
 #'
 #' data(ExampleDataset)
 #' data_filtered <- filter_genes(head(ExampleDataset, 100),
-#'   filter_method<- "High_Variable_Genes", n_features<-80)
+#'   filter_method = "High_Variable_Genes", n_features=80)
 #'
 #' @importFrom Seurat CreateSeuratObject FindVariableFeatures VariableFeatures
 #' @importFrom caret nearZeroVar
@@ -51,8 +51,8 @@ filter_genes <- function(data, filter_method, n_features, unique_cut) {
 #' This function normalizes a matrix of gene expression data using different
 #' methods, including TMM, RLE, CPM, TPM, and LogNormalize.
 #'
-#' @param ExpressionData A Table of gene expression data to be normalized. Rows
-#' represent genes, and columns represent samples.
+#' @param ExpressionData A Matrix of gene expression data to be normalized. Rows
+#' represent genes, and columns represent Cells.
 #' @param normal_method A character string specifying the normalization method.
 #' Possible values are "TMM", "RLE", "CPM", "TPM", and "LogNormalize".
 #'
@@ -61,8 +61,8 @@ filter_genes <- function(data, filter_method, n_features, unique_cut) {
 #' @examples
 #'
 #' data(ExampleDataset)
-#' Norm_data <- normalize_data(ExpressionData <-
-#'  head(ExampleDataset, 100),normal_method <- "LogNormalize")
+#' Norm_data <- normalize_data(ExpressionData =
+#'  head(ExampleDataset, 100),normal_method = "LogNormalize")
 #'
 #' @importFrom edgeR calcNormFactors
 #' @importFrom stats median model.matrix na.omit p.adjust

@@ -1,11 +1,12 @@
-#' Apply a statistical filter to gene expression data
+#' Apply a statistical filter to gene expression data for Feature Selection
+#' in scRNA-seq Data
 #'
 #' This function performs a statistical filtering method on gene expression data.
 #' It filters the genes based on their statistical significance calculated by
 #' various methods.
 #'
 #' @param data A matrix or data.frame object representing gene expression data.
-#'   Rows represent genes, and columns represent samples.
+#'   Rows represent genes, and columns represent Cells.
 #' @param Pvalue_md A character string indicating the statistical method to use
 #'   for filtering. Can be one of "Waldtest", "BPglm", "Wilcoxon-Test" or "LRT".
 #' @param Labels A character or factor vector specifying the label for each cell
@@ -24,8 +25,9 @@
 #' @examples
 #'
 #' data(ExampleDataset)
-#' Statistical_Filter(head(ExampleDataset, 10), Pvalue_md<-"Waldtest",
-#' Labels<-Labels,n_genes_to_keep<-100)
+#' data(Labels)
+#' Statistical_Filter(head(ExampleDataset, 10), Pvalue_md="Waldtest",
+#' Labels=Labels,n_genes_to_keep=100)
 #'
 #' @importFrom DESeq2 DESeqDataSetFromMatrix
 #' @importFrom BPSC BPglm
@@ -81,7 +83,7 @@ Statistical_Filter <- function(data, Pvalue_md, Labels, n_genes_to_keep) {
   }
   return(
     list(
-      FilterData <- neudata,
-      Important_Features <- Genes,
-      Statistical_Analysis <- PvalueData)
+      FilterData = neudata,
+      Important_Features = Genes,
+      Statistical_Analysis = PvalueData)
   )}

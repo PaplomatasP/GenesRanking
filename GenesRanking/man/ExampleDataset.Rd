@@ -3,16 +3,16 @@
 \docType{data}
 \name{ExampleDataset}
 \alias{ExampleDataset}
-\title{Single-Cell RNA Expression}
+\title{Example Single-Cell RNA Expression Dataset}
 \format{
-An object of class \code{data.frame} with 2000 rows and 384 columns.
+A data.frame with rows representing genes and columns representing cells:
+\describe{
+\item{Cells}{Numeric vector of expression values for cells}
+...
+}
 }
 \usage{
 ExampleDataset
-}
-\value{
-A data.frame object representing gene expression data from
-single-cell RNA sequencing.
 }
 \description{
 A data.frame object that represents gene expression data from
@@ -21,12 +21,5 @@ individual genes, while the columns correspond to individual cells.
 }
 \examples{
 data(ExampleDataset)
-
 }
-\keyword{RNA}
-\keyword{data,}
-\keyword{data.frame}
-\keyword{expression}
-\keyword{gene}
-\keyword{sequencing,}
-\keyword{single-cell}
+\keyword{datasets}

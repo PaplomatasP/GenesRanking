@@ -36,6 +36,6 @@ of caret.
 
 data(ExampleDataset)
 data_filtered <- filter_genes(head(ExampleDataset, 100),
-  filter_method<- "High_Variable_Genes", n_features<-80)
+  filter_method = "High_Variable_Genes", n_features=80)
 
 }

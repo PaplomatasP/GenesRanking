@@ -5,14 +5,15 @@
 \alias{FilterData}
 \title{Results of filtered processing}
 \format{
-An object of class \code{list} of length 3.
+A matrix or data.frame object representing the gene expression data
+after it has been filtered or processed in some way.
+\describe{
+\item{Cells}{Numeric vector of expression values for cells}
+...
+}
 }
 \usage{
 FilterData
-}
-\value{
-A matrix or data.frame object representing the gene expression data
-after it has been filtered or processed in some way.
 }
 \description{
 A list object that represents the gene expression data after it
@@ -20,11 +21,5 @@ has been filtered or processed in some way.
 }
 \examples{
 data(FilterData)
-
 }
-\keyword{data}
-\keyword{data,}
-\keyword{expression}
-\keyword{filtering,}
-\keyword{gene}
-\keyword{processing}
+\keyword{datasets}

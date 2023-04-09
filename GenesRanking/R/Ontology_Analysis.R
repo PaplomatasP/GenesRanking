@@ -49,11 +49,10 @@ Ontology_Analysis <- function(Important_Features,
 
   # Perform enrichment analysis based on the selected ontology type
   if (ontology_type == "KEGG") {
-    results <- clusterProfiler::enrichKEGG(
-      gene <- entrez_ids,
-      organism <- ifelse(organism == "human", "hsa", "mmu"),
-      pvalueCutoff <- 0.05
-    )
+    results = clusterProfiler::enrichKEGG(
+      gene = entrez_ids,
+      organism = ifelse(organism == "human", "hsa", "mmu"),
+      pvalueCutoff = 0.05)
   } else if (ontology_type == "GO") {
     results = clusterProfiler::enrichGO(
       gene = entrez_ids,
@@ -62,13 +61,11 @@ Ontology_Analysis <- function(Important_Features,
       pvalueCutoff = 0.05)
   } else if (ontology_type == "MKEGG") {
     results <- clusterProfiler::enrichMKEGG(
-      gene = entrez_ids,
-      organism = ifelse(organism == "human", "hsa", "mmu"),
-      pvalueCutoff =- 0.05)
+      gene <- entrez_ids,
+      organism <- ifelse(organism == "human", "hsa", "mmu"))
   } else {
     stop("Invalid ontology_type specified. Use 'KEGG', 'GO', or 'MKEGG'.")
   }
   results <- results@result
   return(results)
 }
-

@@ -2,13 +2,14 @@
 % Please edit documentation in R/Statistical_Filter.R
 \name{Statistical_Filter}
 \alias{Statistical_Filter}
-\title{Apply a statistical filter to gene expression data}
+\title{Apply a statistical filter to gene expression data for Feature Selection
+in scRNA-seq Data}
 \usage{
 Statistical_Filter(data, Pvalue_md, Labels, n_genes_to_keep)
 }
 \arguments{
 \item{data}{A matrix or data.frame object representing gene expression data.
-Rows represent genes, and columns represent samples.}
+Rows represent genes, and columns represent Cells.}
 
 \item{Pvalue_md}{A character string indicating the statistical method to use
 for filtering. Can be one of "Waldtest", "BPglm", "Wilcoxon-Test" or "LRT".}
@@ -36,7 +37,8 @@ various methods.
 \examples{
 
 data(ExampleDataset)
-Statistical_Filter(head(ExampleDataset, 10), Pvalue_md<-"Waldtest",
-Labels<-Labels,n_genes_to_keep<-100)
+data(Labels)
+Statistical_Filter(head(ExampleDataset, 10), Pvalue_md="Waldtest",
+Labels=Labels,n_genes_to_keep=100)
 
 }

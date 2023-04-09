@@ -33,17 +33,15 @@ machine learning-based feature selection method.
 features used in the machine learning analysis.
 }
 \description{
-This function applies machine learning-based feature selection using
-tree-based models to single-cell RNA sequencing (scRNA-seq) data. The function
-takes as input a data matrix, a vector of cell labels, a machine learning
-method, and additional parameters to configure the machine learning method.
-The resulting filtered data, important features, and the ML analysis are
-returned as a list.
+This function performs feature selection using tree-based Machine Learning
+models to identify the dominant genes in a dataset.
+It then uses machine learning analysis to identify the most importance features.
 }
 \examples{
 
 data(ExampleDataset)
-Tree_Based_ML(head(ExampleDataset, 10), Labels, MLmethod<-"rf",
-  n_genes_to_keep<-8)
+data(Labels)
+Tree_Based_ML(head(ExampleDataset, 10), Labels, MLmethod="rf",
+  n_genes_to_keep=8)
 
 }

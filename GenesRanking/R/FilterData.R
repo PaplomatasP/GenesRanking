@@ -1,14 +1,16 @@
-#' @title Results of filtered processing
-#'
-#' @description A list object that represents the gene expression data after it
+#'@title Results of filtered processing
+#'@description A list object that represents the gene expression data after it
 #'   has been filtered or processed in some way.
 #'
-#' @return A matrix or data.frame object representing the gene expression data
+#' @format A matrix or data.frame object representing the gene expression data
 #'   after it has been filtered or processed in some way.
-#'
+#' \describe{
+#'   \item{Cells}{Numeric vector of expression values for cells}
+#'   ...
+#' }
 #' @examples
 #' data(FilterData)
-#'
-#' @keywords gene expression data, filtering, data processing
-#'
 "FilterData"
+
+
+

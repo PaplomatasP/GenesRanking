@@ -1,11 +1,8 @@
 #' Applies tree-based machine learning for feature selection in scRNA-seq data
 #'
-#' This function applies machine learning-based feature selection using
-#' tree-based models to single-cell RNA sequencing (scRNA-seq) data. The function
-#' takes as input a data matrix, a vector of cell labels, a machine learning
-#' method, and additional parameters to configure the machine learning method.
-#' The resulting filtered data, important features, and the ML analysis are
-#' returned as a list.
+#' This function performs feature selection using tree-based Machine Learning
+#' models to identify the dominant genes in a dataset.
+#' It then uses machine learning analysis to identify the most importance features.
 #'
 #' @param data A numeric matrix of gene expression values with rows representing
 #'   genes and columns representing cells.
@@ -33,8 +30,9 @@
 #' @examples
 #'
 #' data(ExampleDataset)
-#' Tree_Based_ML(head(ExampleDataset, 10), Labels, MLmethod<-"rf",
-#'   n_genes_to_keep<-8)
+#' data(Labels)
+#' Tree_Based_ML(head(ExampleDataset, 10), Labels, MLmethod="rf",
+#'   n_genes_to_keep=8)
 #'
 #' @export
 Tree_Based_ML <- function(data,
@@ -44,7 +42,7 @@ Tree_Based_ML <- function(data,
   importanceLimit <- -1
   data <- as.data.frame(t(data))
   MLlist <- c(
-    "rf","rpart","C5.0","treebag","xgbTree"
+    "rf","rpart","C5.0","treebag"
   )
   if (MLmethod %in% MLlist) {
     preProcMethod <- c("knnImpute")
@@ -60,8 +58,8 @@ Tree_Based_ML <- function(data,
     data$Labels, p = 0.75, list = FALSE)
   trainData <- data[partitionData,]
   testData  <- data[-partitionData,]
-  trainControl <- caret::trainControl(method = "repeatedcv",
-                                      number = 2,repeats = 1,
+  trainControl <- caret::trainControl(method = "cv",
+                                      number = 2,
                                       p = 0.75)
   message("Model training, please wait!!!!")
   model <- caret::train(
@@ -84,8 +82,8 @@ Tree_Based_ML <- function(data,
   message("The Analysis is completed.")
   return(
     list(
-      FilterData <- newdata,
-      Important_Features <- Genes,
-      ML_Analysis <- df_imps1
+      FilterData = newdata,
+      Important_Features = Genes,
+      ML_Analysis = df_imps1
     ))
 }
