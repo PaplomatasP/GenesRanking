@@ -1,6 +1,6 @@
 Package: GenesRanking
 Title: A package for identifying biomarkers in scRNA-seq data
-Version: 0.1.0
+Version: 0.99.1
 Authors@R: c(
   person("Petros", "Paplomatas", email = "p.paplomatas@hotmail.com",
          role = c("cre","aut"),
@@ -27,14 +27,16 @@ Imports:
   DESeq2,
   MAST,
   edgeR,
-  scater,
   stats,
   BPSC,
-  clusterProfiler,
-  org.Hs.eg.db,
-  org.Mm.eg.db,
-  AnnotationDbi,
-  utils 
+  utils,
+  gbm,
+  mRMRe,
+  Kendall,
+  FSelector,
+  iml,
+  fastshap,
+  ranger
 Suggests:
     knitr,
     rmarkdown,
