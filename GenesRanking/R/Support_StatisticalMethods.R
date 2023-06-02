@@ -91,19 +91,19 @@ PvalueCalc <- function(data, Pvaluemethod, Labels, Test = "LRT",
   } else if (Pvaluemethod == "LRT") {
     options(warn = -1)
     object_DESeq2 <- as.matrix(SummarizedExperiment::assay(data, "counts"))
-    object_DESeq2 <- na.omit(object_DESeq2)
-    object_DESeq2 <- DESeq2::DESeqDataSetFromMatrix(countData = round(object_DESeq2 + 1),
+    object_DESeq2 <- DESeq2::DESeqDataSetFromMatrix(countData = round(object_DESeq2+1),
                                                     colData = data.frame(condition = factor(Labels)),
                                                     design = ~ condition)
+
     if (DESeq2.test == "LRT") {
       object_DESeq2 <- DESeq2::DESeq(object_DESeq2, test = DESeq2.test,
                                      parallel = TRUE, betaPrior = FALSE,
-                                     fitType = "parametric", reduced = ~ 1)
+                                     fitType = "mean", reduced = ~ 1)
     }
     if (DESeq2.test == "Wald") {
       object_DESeq2 <- DESeq2::DESeq(object_DESeq2, test = DESeq2.test,
                                      parallel = TRUE, betaPrior = TRUE,
-                                     fitType = "parametric")
+                                     fitType = "mean")
     }
     res_cpm <- DESeq2::results(object_DESeq2)
     result_DESeq2 <- list(gene_names = rownames(res_cpm),
