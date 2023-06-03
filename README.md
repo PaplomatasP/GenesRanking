@@ -1,78 +1,127 @@
-# GenesRanking <img align="right" src="man/figures/logo.svg" style="height:100px;" />
+---
+title: "GenesRanking_vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GenesRanking_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# GenesRanking
 
   - [GenesRanking](#GenesRanking)
-  - [Introduction](#Introduction)
-  - [Installation](#Installation)
-  - [Usage-example](#Usage-example)
+  - [Introduction](#introduction)
+  - [Installation](#installation)
+  - [Main Functions](#main-functions)
+  - [Examination of Results](#examination-of-results)
+  - [Use Cases](#use-cases)
+  - [Conclusion](#conclusion)
 
 
-### Introduction
 
-The GenesRanking package offers a range of advanced algorithms for feature selection in high-dimensional biological data. These include statistical approaches, established methods for identifying variable genes, and a variety of machine learning methods using wrapper or tree-based approaches. Additionally, the package provides functions for data normalization and pre-processing to ensure reliable data analysis, as well as enrichment analysis using the Enrichr package.
+## Introduction
+ `GenesRanking` is an R package for filtering and selecting important genes from single-cell RNA-seq data. The package contains two main functions: `Filter_FS_Methods` and `ML_FS_Methods`.
 
-Our package offers a comprehensive set of tools to facilitate the user's first experience with the single-cell RNA sequencing data analysis. Specifically, ``ExampleDataset``, ``Labels``, and ``FilterData`` are provided to assist the user to have his first experience with our package. Labels are character or factor vectors that identify each cell in the data matrix, while ExampleDataset is a data.frame object that captures the gene expression data for individual cells. FilterData, on the other hand, is a list object that contains filtered and/or processed gene expression data.
+ Our package offers a comprehensive set of tools to facilitate users' first
+experience with single-cell RNA sequencing data analysis through feature
+selection techniques. The ExampleDataset, Labels, and FilterData objects
+are provided to assist users. Labels are character or factor vectors that
+identify each cell in the data matrix, while ExampleDataset is a data.frame
+object capturing gene expression data for individual cells. FilterData is
+a list object containing filtered and/or processed gene expression data.
 
-To analyze the data, the user may choose from a range of four key approaches, including variable gene methods, machine learning, and statistical methods. However, before applying any analysis techniques, data preprocessing steps such as normalization and/or noise reduction may be required to improve data quality and reliability.
+ To analyze the data, users may choose from two key approaches:
+machine learning and statistical methods. However, before applying
+any analysis techniques, data preprocessing steps such as normalization 
+and/or noise reduction may be required to improve data quality, 
+reliability, and to reduce computational time.
 
-### Installation
-```{
-install.packages("BiocManager")
-BiocManager::install("GenesRanking")
+
+
+## Installation
 ```
-### Usage-example
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(GenesRanking)
 
-To demonstrate the use of our package, we first loaded the necessary libraries and example dataset.
-```{r libraries, warning=FALSE, message=FALSE}
+```
+
+```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
 library(GenesRanking)
-library(enrichR)
-data("ExampleDataset")
-data("Labels")
-data("FilterData")
+sessionInfo()
 ```
 
-Next, we proceeded to preprocess our data and demonstrate our approach for each category.
+## Main Functions
 
-```{r Preprocess, echo=T, message=F, warning=F}
-# Apply normalization methods such as log2 normalization.
-Norm_data=normalize_data(ExpressionData=ExampleDataset, normal_method="LogNormalize") 
+### Filter_FS_Methods
 
-# Utilizing a high variability filter serves to increase the reliability of our data by reducing the impact of noisy or irrelevant features.
-data_filtered <- filter_genes(data=ExampleDataset, filter_method = "High_Variable_Genes", n_features = 1000)
-```
-We have at our disposal four distinct methods for identifying genes with dominant expression patterns. For illustrative purposes, we will provide an example demonstrating each method.
-```{r error=FALSE, warning=FALSE, message=FALSE}
-#Variable_Filter 
-VariableFiltering <- Variable_Filter(data_filtered,  method = "DUBStepR", K=10,Num.pcs=10)
 
-#Variable_Filter 
-StatisticalFilter <- Statistical_Filter(data_filtered, Pvalue_md = "Waldtest", Labels = Labels, threshold = 0.05, n_genes_to_keep = 100)
+`Filter_FS_Methods` applies Filter feature selection methods. It includes parameters like `HighVariableFilter` and `n_features` for filtering high variability genes, which are often the most informative genes in scRNA-seq data analysis. The `LogTransformation` parameter allows for log transformation of the data using the Seurat package.
 
-#Wrapper_Based_ML
-result_Wrapper_Based_ML <- Wrapper_Based_ML(data_filtered, Labels=Labels, MLmethod = "knn", importanceLimit = 10, n_genes_to_keep = 100)
 
-#Tree_Based_ML
-result_Tree_Based_ML <- Tree_Based_ML(data_filtered, Labels=Labels, MLmethod = "C5.0", importanceLimit = 10, n_genes_to_keep = 100)
+Here's an example usage:
 
-```
-lets see the results:
 
-```{r Dominants genes}
-#Dominants genes isolated eache method:
-#Each of the methods has identified 100 dominant genes, with the exception of the variable genes method.
+```{r Filter_FS_Methods, warning=FALSE, message=FALSE}
+# load example data
+data(ExampleDataset)
+data(Labels)
 
-head(VariableFiltering$Important_Features,10)
+# apply Filter_FS_Methods
+FS_filtered_data <- Filter_FS_Methods(ExampleDataset, Labels, 
+                                    n_genes_to_keep=100, 
+                                    method="WaldTest",
+                                    LogTransformation=TRUE,
+                                    HighVariableFIlter=TRUE,
+                                    n_features=2000)
 
-head(StatisticalFilter$Important_Features,10)
 
-head(result_Wrapper_Based_ML$Important_Features,10)
-
-head(result_Tree_Based_ML$Important_Features,10)
-```
-Now, we can perform an enrichment analysis on the identified dominant genes. Let's take a look at an example.
-```{r Ontology_Analysis genes, echo=T, message=F, warning=F}
-  OntologyAnalysis=Ontology_Analysis(VariableFiltering$Important_Features, "KEGG_2021_Human")
-
-OntologyAnalysis
 
 ```
+### ML_FS_Methods
+
+`ML_FS_Methods` applies a specified machine learning method to filter and select important genes from single-cell RNA-seq data.
+
+Here's an example usage:
+
+```{r ML_FS_Methods, warning=FALSE, message=FALSE}
+# apply ML_FS_Methods
+ML_filtered_data <- ML_FS_Methods(ExampleDataset, Labels, 
+                                  n_genes_to_keep=100, 
+                                  method="PAM",
+                                  LogTransformation=TRUE,
+                                  HighVariableFIlter=TRUE,
+                                  n_features=1000)
+
+```
+
+## Examination of Results
+
+The results returned by `Filter_FS_Methods` and `ML_FS_Methods` contain a wealth of information that can be leveraged for further analysis. 
+
+```{r Examine Results}
+
+# The names of the list elements provide an overview of the different components of the results:
+names(ML_filtered_data)
+
+# For instance, let's take a look at the 'Important_Features' element, which contains the dominant genes identified by the method:
+head(ML_filtered_data$Important_Features, 10)
+
+# Another important element could be the 'Feature_Importance_Score', which quantifies the importance of each feature:
+head(ML_filtered_data$Feature_Importance_Score, 10)
+```
+
+
+## Use Cases
+
+  The `GenesRanking` package is particularly useful for researchers and bioinformaticians working with single-cell RNA-seq data. By allowing users to focus on the most informative genes and applying specific machine learning methods, it can greatly assist in data analysis and the discovery of new biological insights.
+  
+## Conclusion
+
+ The `GenesRanking` package provides efficient and user-friendly functions for filtering and selecting important genes from scRNA-seq data. With its capabilities for high variability gene filtering and the application of machine learning methods, it serves as a valuable tool in the analysis of single-cell RNA-seq data.
