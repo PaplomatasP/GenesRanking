@@ -4,15 +4,13 @@
 \alias{data_fitting}
 \title{Function to create a SingleCellExperiment object}
 \usage{
-data_fitting(data, group, normal.Method)
+data_fitting(data, group)
 }
 \arguments{
 \item{data}{A matrix or data.frame object representing gene expression data.
 Rows represent genes, and columns represent samples.}
 
-\item{group}{A vector of sample labels.}
-
-\item{normal.Method}{An optional character string indicating the
+\item{group}{A vector of sample labels.
 normalization method to use. Default is \code{NULL}.}
 }
 \value{

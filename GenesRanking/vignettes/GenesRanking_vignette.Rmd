@@ -74,12 +74,12 @@ data(ExampleDataset)
 data(Labels)
 
 # apply Filter_FS_Methods
-FS_filtered_data <- Filter_FS_Methods(ExampleDataset, Labels, 
+FS_filtered_data <- Filter_FS_Methods(ExampleDataset[1:500,], Labels, 
                                     n_genes_to_keep=100, 
-                                    method="WaldTest",
+                                    method="mRMRe",
                                     LogTransformation=TRUE,
                                     HighVariableFIlter=TRUE,
-                                    n_features=2000)
+                                    n_features=200)
 
 
 
@@ -92,12 +92,12 @@ Here's an example usage:
 
 ```{r ML_FS_Methods, warning=FALSE, message=FALSE}
 # apply ML_FS_Methods
-ML_filtered_data <- ML_FS_Methods(ExampleDataset, Labels, 
+ML_filtered_data <- ML_FS_Methods(ExampleDataset[1:500,], Labels, 
                                   n_genes_to_keep=100, 
-                                  method="PAM",
+                                  method="C5.0",
                                   LogTransformation=TRUE,
                                   HighVariableFIlter=TRUE,
-                                  n_features=1000)
+                                  n_features=200)
 
 ```
 

@@ -84,27 +84,28 @@
         Statistical_Analysis = PvalueData)
     )}
 
-  #' Kruskal-Wallis Test for Single-Cell RNA Sequencing Data
-  #'
-  #' This function performs a Kruskal-Wallis test to rank genes in single-cell RNA sequencing data
-  #' based on their expression across different cell types. It returns the filtered data and a summary
-  #' of the statistical analysis.
-  #'
-  #' @param data A numeric matrix or data frame containing the single-cell RNA sequencing data, with
-  #'   genes as rows and cells as columns.
-  #' @param Labels A factor vector containing the cell type labels for each cell in the data.
-  #' @param n_genes_to_keep An integer specifying the number of top-ranked genes to keep in the
-  #'   filtered data.
-  #'
-  #' @return A list containing the following elements:
-  #' \itemize{
-  #'   \item{FilterData}{A numeric matrix or data frame containing the filtered data with the
-  #'     top-ranked genes.}
-  #'   \item{Important_Features}{A character vector containing the names of the top-ranked genes.}
-  #'   \item{Statistical_Analysis}{A data frame summarizing the Kruskal-Wallis test results, including
-  #'     the p-values, false discovery rate (FDR) corrected p-values, and gene names.}
-  #' }
-  #'
+#' Kruskal-Wallis Test for Single-Cell RNA Sequencing Data
+#'
+#' This function performs a Kruskal-Wallis test to rank genes in single-cell RNA sequencing data
+#' based on their expression across different cell types. It returns the filtered data and a summary
+#' of the statistical analysis.
+#'
+#' @param data A numeric matrix or data frame containing the single-cell RNA sequencing data, with
+#'   genes as rows and cells as columns.
+#' @param Labels A factor vector containing the cell type labels for each cell in the data.
+#' @param n_genes_to_keep An integer specifying the number of top-ranked genes to keep in the
+#'   filtered data.
+#'
+#' @return A list containing the following elements:
+#' \itemize{
+#'   \item{FilterData}{A numeric matrix or data frame containing the filtered data with the
+#'     top-ranked genes.}
+#'   \item{Important_Features}{A character vector containing the names of the top-ranked genes.}
+#'   \item{Statistical_Analysis}{A data frame summarizing the Kruskal-Wallis test results, including
+#'     the p-values, false discovery rate (FDR) corrected p-values, and gene names.}
+#' }
+#'
+#' @importFrom stats kruskal.test
   KruskalWallisFun <- function(data, Labels, n_genes_to_keep) {
     data  <- as.data.frame(t(data))
     data$Labels  <- as.factor(Labels)

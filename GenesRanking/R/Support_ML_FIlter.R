@@ -12,10 +12,15 @@
 #'   - FilterData: A data frame or matrix containing the top n_genes_to_keep genes selected by the specified machine learning method.
 #'   - Important_Features: A vector of the names of the top n_genes_to_keep genes.
 #'   - ML_Analysis: A data frame containing the importance scores of all genes considered by the machine learning method.
+#' @importFrom caret train
+#' @importFrom stats predict
 ML_filter <- function(data,
                           Labels,
                           MLmethod,
                           n_genes_to_keep) {
+  data=as.data.frame(t(data))
+  data$Labels <- as.factor(Labels)
+
   importanceLimit <- -1
   MLlist <- c(
     "pam","gcvEarth","pls","rf","rpart","C5.0","gbm","xgbTree"
@@ -29,8 +34,6 @@ ML_filter <- function(data,
   if (MLmethod == "rpart" ) {
     colnames(data) <- make.names(colnames(data))
   }
-  data=as.data.frame(t(data))
-  data$Labels <- as.factor(Labels)
 
   if (MLmethod == "xgbTree") {
 

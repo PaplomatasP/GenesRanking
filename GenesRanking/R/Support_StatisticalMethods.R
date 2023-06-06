@@ -3,29 +3,23 @@
 #' @param data A matrix or data.frame object representing gene expression data.
 #'   Rows represent genes, and columns represent samples.
 #' @param group A vector of sample labels.
-#' @param normal.Method An optional character string indicating the
 #'   normalization method to use. Default is `NULL`.
 #' @return A `SingleCellExperiment` object containing the gene expression data,
 #'   sample labels, and optional normalized gene expression data.
 #' @return A SingleCellExperiment object
 #' @import SingleCellExperiment
 #'
-data_fitting <- function(data, group, normal.Method) {
-  if (missing(normal.Method)) {
-    normcounts <- data
-  } else {
-    normcounts <- normalize_data(data, normal.Method)
-  }
+data_fitting <- function(data, group) {#normal.Method
   SingleCell <-
     SingleCellExperiment::SingleCellExperiment(
-      assays = list(counts = data, normcounts = normcounts))
+      assays = list(counts = data, normcounts = data))
   gene_df <- data.frame(Gene = rownames(SingleCell))
   cell_df <- data.frame(label = group, cell = colnames(SingleCell))
   rownames(gene_df) <- gene_df$Gene
   rownames(cell_df) <- cell_df$cell
   SingleCell <-
     SingleCellExperiment::SingleCellExperiment(
-      assays = list(counts = data, normcounts = normcounts),
+      assays = list(counts = data, normcounts = data),
       colData = cell_df,
       rowData = gene_df
     )

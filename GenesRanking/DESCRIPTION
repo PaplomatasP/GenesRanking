@@ -34,7 +34,6 @@ Imports:
   mRMRe,
   Kendall,
   FSelector,
-  iml,
   fastshap,
   catboost,
   ranger
@@ -43,7 +42,6 @@ Suggests:
     rmarkdown,
     randomForest,
     C50,
-    glmnet,
     testthat (>= 3.0.0)
 Depends: 
     R (>= 4.2.0)

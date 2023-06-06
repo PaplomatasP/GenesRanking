@@ -43,6 +43,6 @@ data(ExampleDataset)
 data(Labels)
 
 # Apply the Wald Test method and keep the top 10 genes
-result <- Filter_FS_Methods(ExampleDataset, Labels, n_genes_to_keep=100, method="WaldTest",
-                            LogTransformation=TRUE, HighVariableFIlter=TRUE, n_features=2000)
+result <- Filter_FS_Methods(ExampleDataset[1:500,], Labels, n_genes_to_keep=100, method="WaldTest",
+                            LogTransformation=TRUE, HighVariableFIlter=TRUE, n_features=200)
 }
