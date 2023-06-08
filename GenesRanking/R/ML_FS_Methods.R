@@ -17,56 +17,125 @@
 #' data(ExampleDataset)
 #' data(Labels)
 #' # Apply the knn method and keep the top 10 genes
-#' result <- ML_FS_Methods(ExampleDataset[1:500,], Labels, n_genes_to_keep=100, method="C5.0",
-#' LogTransformation=TRUE, HighVariableFIlter=TRUE, n_features=200)
+#' result <- ML_FS_Methods(ExampleDataset[1:500, ], Labels,
+#'     n_genes_to_keep = 100, method = "C5.0",
+#'     LogTransformation = TRUE, HighVariableFIlter = TRUE, n_features = 200
+#' )
 #' @export
-ML_FS_Methods  <- function(data, Labels, n_genes_to_keep, method,LogTransformation=TRUE,
-                           HighVariableFIlter=TRUE,n_features=2000) {
-  min_cell_percentage<-0.1
-  # Filter lowly-expressed genes
-  min_cells <- ceiling(min_cell_percentage * ncol(data))  # At least min_cell_percentage of cells
-  gene_counts <- rowSums(data > 0)
-  data <- data[gene_counts >= min_cells,]
+ML_FS_Methods <-
+    function(data,
+             Labels,
+             n_genes_to_keep,
+             method,
+             LogTransformation = TRUE,
+             HighVariableFIlter = TRUE,
+             n_features = 2000) {
+        min_cell_percentage <- 0.1
+        # Filter lowly-expressed genes
+        min_cells <-
+            ceiling(min_cell_percentage * ncol(data)) # At least min_cell_percentage of cells
+        gene_counts <- rowSums(data > 0)
+        data <- data[gene_counts >= min_cells, ]
+        if (HighVariableFIlter == TRUE) {
+            seurat_obj <- Seurat::CreateSeuratObject(data)
+            data_seurat <- Seurat::FindVariableFeatures(seurat_obj,
+                selection.method = "vst",
+                nfeatures = n_features
+            )
+            genes <- head(Seurat::VariableFeatures(data_seurat), n_features)
+            data <- as.data.frame(data[rownames(data) %in% genes, ])
+        }
+        if (LogTransformation == TRUE) {
+            scale_factor <- mean(colSums(data))
+            data <- as.matrix(Seurat::LogNormalize(data, scale.factor <-
+                scale_factor))
+        }
 
-  if (HighVariableFIlter==TRUE){
-    seurat_obj <- Seurat::CreateSeuratObject(data)
-    data_seurat <- Seurat::FindVariableFeatures(
-      seurat_obj,
-      selection.method = "vst",
-      nfeatures = n_features
-    )
-    genes <- head(Seurat::VariableFeatures(data_seurat), n_features)
-    data <- as.data.frame(data[rownames(data) %in% genes, ])
-  }
-  if (LogTransformation==TRUE){
-    scale_factor <- mean(colSums(data))
-    data <- as.matrix(
-      Seurat::LogNormalize(data, scale.factor <- scale_factor))
-  }
+        switch(method,
+            "PAM" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "pam",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "gcvEarth" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "gcvEarth",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "PLS" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "pls",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "RF" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "rf",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "CART" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "rpart",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "C5.0" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "C5.0",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "GBM" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "gbm",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "xgbTree" = {
+                result <-
+                    ML_filter(
+                        data,
+                        MLmethod = "xgbTree",
+                        Labels = Labels,
+                        n_genes_to_keep = n_genes_to_keep
+                    )
+            },
+            "Catboost" = {
+                result <-
+                    CatBoost_feature_selection(data, Labels = Labels, n_genes_to_keep = n_genes_to_keep)
+            },
+            "ShapleyValues" = {
+                result <-
+                    ShapleyValuesFun(data, Labels = Labels, n_genes_to_keep = n_genes_to_keep)
+            },
+            {
+                stop("Invalid method. Please choose a valid feature selection method.")
+            }
+        )
 
-  if (method == "PAM") {
-    result <- ML_filter(data, MLmethod="pam", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "gcvEarth") {
-    result <-  ML_filter(data, MLmethod="gcvEarth", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "PLS") {
-    result <- ML_filter(data, MLmethod="pls", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "RF") {
-    result <-ML_filter(data, MLmethod="rf", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "CART") {
-    result <- ML_filter(data, MLmethod="rpart", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "C5.0") {
-    result <-ML_filter(data, MLmethod="C5.0", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "GBM") {
-    result <- ML_filter(data, MLmethod="gbm", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "xgbTree") {
-    result <- ML_filter(data, MLmethod="xgbTree", Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "Catboost") {
-    result <- CatBoost_feature_selection(data,Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else if (method == "ShapleyValues") {
-    result <- ShapleyValuesFun(data, Labels=Labels, n_genes_to_keep=n_genes_to_keep)
-  } else {
-    stop("Invalid method. Please choose a valid feature selection method.")
-  }
-  return(result)
-}
-
+        return(result)
+    }

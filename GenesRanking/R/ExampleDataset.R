@@ -1,5 +1,5 @@
-#'@title Example Single-Cell RNA Expression Dataset
-#'@description A data.frame object that represents gene expression data from
+#' @title Example Single-Cell RNA Expression Dataset
+#' @description A data.frame object that represents gene expression data from
 #' single-cell RNA sequencing. The rows in the data.frame correspond to
 #' individual genes, while the columns correspond to individual cells.
 #'
@@ -11,6 +11,3 @@
 #' @examples
 #' data(ExampleDataset)
 "ExampleDataset"
-
-
-

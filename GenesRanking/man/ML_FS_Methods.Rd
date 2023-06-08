@@ -41,6 +41,8 @@ This function applies a specified machine learning method to filter and select i
 data(ExampleDataset)
 data(Labels)
 # Apply the knn method and keep the top 10 genes
-result <- ML_FS_Methods(ExampleDataset[1:500,], Labels, n_genes_to_keep=100, method="C5.0",
-LogTransformation=TRUE, HighVariableFIlter=TRUE, n_features=200)
+result <- ML_FS_Methods(ExampleDataset[1:500, ], Labels,
+    n_genes_to_keep = 100, method = "C5.0",
+    LogTransformation = TRUE, HighVariableFIlter = TRUE, n_features = 200
+)
 }

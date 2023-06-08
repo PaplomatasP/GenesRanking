@@ -11,4 +11,3 @@
 #' @examples
 #' data(Labels)
 "Labels"
-

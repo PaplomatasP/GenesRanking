@@ -11,7 +11,7 @@ Filter_FS_Methods(
   method,
   LogTransformation = TRUE,
   HighVariableFIlter = TRUE,
-  n_features = n_features
+  n_features = 2000
 )
 }
 \arguments{
@@ -43,6 +43,8 @@ data(ExampleDataset)
 data(Labels)
 
 # Apply the Wald Test method and keep the top 10 genes
-result <- Filter_FS_Methods(ExampleDataset[1:500,], Labels, n_genes_to_keep=100, method="WaldTest",
-                            LogTransformation=TRUE, HighVariableFIlter=TRUE, n_features=200)
+result <- Filter_FS_Methods(ExampleDataset[1:500, ], Labels,
+    n_genes_to_keep = 100, method = "WaldTest",
+    LogTransformation = TRUE, HighVariableFIlter = TRUE, n_features = 200
+)
 }

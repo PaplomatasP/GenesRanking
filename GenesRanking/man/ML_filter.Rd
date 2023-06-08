@@ -12,7 +12,7 @@ ML_filter(data, Labels, MLmethod, n_genes_to_keep)
 \item{Labels}{A vector containing the labels of the samples. Must be the same length as the number of columns in the data.}
 
 \item{MLmethod}{Character, the name of the machine learning method to be applied. Supported methods include:
-"knn", "svmLinear", "lda", "rf", "rpart", "C5.0", "gbm", and "xgbTree".}
+"pam", "gcvEarth", "pls", "rf", "rpart", "C5.0", "gbm", and "xgbTree".}
 
 \item{n_genes_to_keep}{Integer, the number of top genes to keep after applying the selected machine learning method.}
 }
