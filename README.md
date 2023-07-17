@@ -36,11 +36,6 @@ In light of this, our functions offer the options for `LogTransformation` and `H
 
 ## Installation
 ```
-install.packages("GenesRanking")
-
-```
-
-```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
 # Install the devtools package if it's not already installed
 if (!require(devtools)) {
   install.packages("devtools")
@@ -49,10 +44,12 @@ library("devtools")
 # Install the GenesRanking package from GitHub
 devtools::install_github("PaplomatasP/GenesRanking")
 
+```
+
+```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
+
+
 library(GenesRanking)
-library(magrittr)
-
-
 #Install the packages  below :
 
 #devtools::install_github("nghiavtr/BPSC")
