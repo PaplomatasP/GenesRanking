@@ -41,7 +41,9 @@ if (!require(devtools)) {
   install.packages("devtools")
 }
 library("devtools")
+
 # Install the GenesRanking package from GitHub
+
 devtools::install_github("PaplomatasP/GenesRanking")
 
 ```
@@ -50,6 +52,7 @@ devtools::install_github("PaplomatasP/GenesRanking")
 
 
 library(GenesRanking)
+
 #Install the packages  below :
 
 #devtools::install_github("nghiavtr/BPSC")
