@@ -9,7 +9,7 @@ vignette: >
 
 
 # **GenesRanking: A Comprehensive Guide**
-Welcome to the GenesRanking package! This guide will walk you through the features and usage of GenesRanking, a powerful tool for identifying biomarkers in scRNA-seq data.
+Welcome to the GenesRanking package! This guide will walk you through the features and use of GenesRanking, a tool for identifying potential biomarkers in scRNA-seq data.
 
 
 
