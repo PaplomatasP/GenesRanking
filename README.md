@@ -46,22 +46,10 @@ library("devtools")
 
 devtools::install_github("PaplomatasP/GenesRanking")
 
-```
-
-```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
-
-
 library(GenesRanking)
-
-#Install the packages  below :
-
-#devtools::install_github("nghiavtr/BPSC")
-#devtools::install_url('https://github.com/catboost/catboost/releases/download/v1.2/catboost-R-Windows-1.2.tgz', INSTALL_opts = c("--no-multiarch", "--no-test-load"))
-
-library("catboost")
-library("BPSC")
-
 ```
+
+
 
 ## Main Functions
 
