@@ -41,6 +41,14 @@ install.packages("GenesRanking")
 ```
 
 ```{r sessionInfo, warning=FALSE, message=FALSE,results='hide'}
+# Install the devtools package if it's not already installed
+if (!require(devtools)) {
+  install.packages("devtools")
+}
+
+# Install the GenesRanking package from GitHub
+devtools::install_github("PaplomatasP/GenesRanking")
+
 library(GenesRanking)
 library(magrittr)
 #Please installe the BPSC and catboost packages as refers below:
