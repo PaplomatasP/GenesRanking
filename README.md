@@ -1,11 +1,15 @@
 ---
-title: "GenesRanking_vignette"
+title: "GenesRanking: A Comprehensive Guide"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GenesRanking_vignette}
+  %\VignetteIndexEntry{GenesRanking: A Comprehensive Guide}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, echo=FALSE}
+knitr::include_graphics("path_to_your_image.png")
+
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
