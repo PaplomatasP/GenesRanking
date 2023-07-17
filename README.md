@@ -45,17 +45,17 @@ install.packages("GenesRanking")
 if (!require(devtools)) {
   install.packages("devtools")
 }
-
+library("devtools")
 # Install the GenesRanking package from GitHub
 devtools::install_github("PaplomatasP/GenesRanking")
 
 library(GenesRanking)
 library(magrittr)
-#Please installe the BPSC and catboost packages as refers below:
-#install.packages("devtools")
-library("devtools")
-#install_github("nghiavtr/BPSC")
-#install.packages('devtools')
+
+
+#Install the packages  below :
+
+#devtools::install_github("nghiavtr/BPSC")
 #devtools::install_url('https://github.com/catboost/catboost/releases/download/v1.2/catboost-R-Windows-1.2.tgz', INSTALL_opts = c("--no-multiarch", "--no-test-load"))
 
 library("catboost")
