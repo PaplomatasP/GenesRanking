@@ -1,0 +1,48 @@
+Package: GenesRanking
+Title: A Package for Identifying Biomarkers in scRNA-Seq Data
+Version: 0.99.1
+Authors@R: c(
+  person("Petros", "Paplomatas", email = "p.paplomatas@hotmail.com",
+         role = c("cre","aut"),
+         comment = c(ORCID = "0000-0002-2691-2767")),
+  person("Aristidis", "Vrahatis", email = "avrahatis@math.uoa.gr", role = "aut"))
+Description: GenesRanking is an R package designed for efficient biomarker identification from scRNA-seq data.
+  Offering a user-friendly interface, it enables users to employ 20 distinct
+  dimensionality reduction techniques, including various filter and machine learning-based 
+  feature selection methods. Its purpose is to simplify and streamline the biomarker
+  identification process, providing essential tools for biological data analysis.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Depends: 
+    R (>= 4.2.0)
+biocViews:
+Imports:
+  SingleCellExperiment,
+  SummarizedExperiment,
+  DESeq2,
+  MAST,
+  edgeR,
+  caret,
+  Seurat,
+  stats,
+  utils,
+  gbm,
+  mRMRe,
+  Kendall,
+  FSelector,
+  ipred,
+  S4Vectors,
+  doParallel,
+  dplyr,
+  magrittr,
+  ranger
+Suggests:
+    knitr,
+    BPSC,
+    catboost,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr
