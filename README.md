@@ -42,6 +42,10 @@ if (!require(devtools)) {
 }
 library("devtools")
 
+# First install the BPSC package
+
+devtools::install_github("nghiavtr/BPSC")
+
 # Install the GenesRanking package from GitHub
 
 devtools::install_github("PaplomatasP/GenesRanking")
