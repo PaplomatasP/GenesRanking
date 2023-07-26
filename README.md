@@ -42,15 +42,21 @@ if (!require(devtools)) {
 }
 library("devtools")
 
-# First install the BPSC package
+# First install some neccecary package
 
+Catboost:
+devtools::install_url('https://github.com/catboost/catboost/releases/download/v1.2/catboost-R-Windows-1.2.tgz', INSTALL_opts = c("--no-multiarch", "--no-test-load"))
+BPSC:
 devtools::install_github("nghiavtr/BPSC")
+Caret:
+install.packages('caret', dependencies = TRUE)
 
 # Install the GenesRanking package from GitHub
 
 devtools::install_github("PaplomatasP/GenesRanking")
 
 library(GenesRanking)
+library(Caret)
 ```
 
 
