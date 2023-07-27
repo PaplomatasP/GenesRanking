@@ -43,12 +43,29 @@ Filter_FS_Methods <- function(data,
                               LogTransformation = TRUE,
                               HighVariableFIlter = TRUE,
                               n_features = 2000) {
-    min_cell_percentage <- 0.1
     # Filter lowly-expressed genes
-    min_cells <-
-        ceiling(min_cell_percentage * ncol(data)) # At least min_cell_percentage of cells
-    gene_counts <- rowSums(data > 0)
-    data <- data[gene_counts >= min_cells, ]
+ min_genes <- 2000
+min_cell_percentage <- 0.1
+keep_going <- TRUE
+
+while (keep_going) {
+  # Filter lowly-expressed genes
+  min_cells <- ceiling(min_cell_percentage * ncol(data)) # At least min_cell_percentage of cells
+  gene_counts <- rowSums(data > 0)
+  filtered_data <- data[gene_counts >= min_cells, ]
+  
+  # Check if we have at least 2000 genes
+  if (nrow(filtered_data) >= min_genes) {
+    keep_going <- FALSE
+  } else {
+    # If not, reduce min_cell_percentage to keep more genes
+    min_cell_percentage <- min_cell_percentage - 0.01
+  }
+}
+
+# Set data to the filtered data
+data <- filtered_data
+
     if (HighVariableFIlter == TRUE) {
         seurat_obj <- Seurat::CreateSeuratObject(data)
         data_seurat <- Seurat::FindVariableFeatures(seurat_obj,
