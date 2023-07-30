@@ -138,4 +138,4 @@ The `GenesRanking package` serves as a practical tool for researchers and bioinf
 
 GenesRanking provides user-friendly and efficient functions for filtering and selecting important genes from the complex landscape of gene expression data. It offers unique capabilities, such as high variability gene filtering and the application of various machine learning methods. Furthermore, it provides a range of 20 different filter and machine learning techniques, enabling users to effectively identify potential biomarkers and deepen their understanding of biological processes.
 
-In conclusion, GenesRanking is a versatile and powerful tool for anyone looking to navigate the intricate field of gene expression data analysis.
+In conclusion, GenesRanking is a versatile tool for anyone looking to navigate the intricate field of gene expression data analysis.
