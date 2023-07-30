@@ -293,7 +293,7 @@ rangerBagging <- function(data, Labels, n_genes_to_keep) {
   top_features <- head(rownames(importance), n_genes_to_keep)
   
   # Filter the data to keep only the top genes
-  filtered_data <- data[, top_features]
+  filtered_data <- data[top_features, ]
   
   return(
     list(
