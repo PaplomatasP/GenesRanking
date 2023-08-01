@@ -44,7 +44,7 @@ Filter_FS_Methods <- function(data,
                               HighVariableFIlter = TRUE,
                               n_features = 2000) {
     # Filter lowly-expressed genes
- min_genes <- 2000
+ min_genes <-  nrow(data)/4
 min_cell_percentage <- 0.1
 keep_going <- TRUE
 
@@ -54,7 +54,7 @@ while (keep_going) {
   gene_counts <- rowSums(data > 0)
   filtered_data <- data[gene_counts >= min_cells, ]
   
-  # Check if we have at least 2000 genes
+  # Check if we have at least  nrow(data)/4 genes
   if (nrow(filtered_data) >= min_genes) {
     keep_going <- FALSE
   } else {
