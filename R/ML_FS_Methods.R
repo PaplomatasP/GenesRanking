@@ -41,7 +41,7 @@ ML_FS_Methods <-
              LogTransformation = TRUE,
              HighVariableFIlter = TRUE,
              n_features = 2000) {
-  min_genes <- 2000
+  min_genes <- nrow(data)/4
   min_cell_percentage <- 0.1
   keep_going <- TRUE
   
@@ -51,7 +51,7 @@ ML_FS_Methods <-
     gene_counts <- rowSums(data > 0)
     filtered_data <- data[gene_counts >= min_cells, ]
     
-    # Check if we have at least 2000 genes
+    # Check if we have at least nrow(data)/4 genes
     if (nrow(filtered_data) >= min_genes) {
       keep_going <- FALSE
     } else {
@@ -59,7 +59,10 @@ ML_FS_Methods <-
       min_cell_percentage <- min_cell_percentage - 0.01
     }
   }
-  
+#if (n_features < min_genes){
+#      message("The number of genes ")
+    }
+        
   # Set data to the filtered data
   data <- filtered_data
         if (HighVariableFIlter == TRUE) {
