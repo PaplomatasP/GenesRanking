@@ -61,7 +61,7 @@ ML_FS_Methods <-
   }
 #if (n_features < min_genes){
 #      message("The number of genes ")
-    }
+   # }
         
   # Set data to the filtered data
   data <- filtered_data
