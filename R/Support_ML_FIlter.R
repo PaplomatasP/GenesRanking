@@ -126,8 +126,8 @@ ML_filter <- function(data,
   )
   
   # Register parallel backend
-  num_cores <- min(parallel::detectCores() - 1, 4)
-  doParallel::registerDoParallel(parallel::makeCluster(num_cores))
+  #num_cores <- min(parallel::detectCores() - 1, 4)
+  #doParallel::registerDoParallel(parallel::makeCluster(num_cores))
   
   
   # Check if MLmethod is in MLlist
