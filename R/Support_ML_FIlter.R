@@ -291,9 +291,17 @@ rangerBagging <- function(data, Labels, n_genes_to_keep) {
   
   # Select top n_genes_to_keep features
   top_features <- head(rownames(importance), n_genes_to_keep)
+  top_features <- gsub("`", '', top_features)
+
+
+  # Extract the indices of top_features in the data's column names
+  indices <- match(top_features, colnames(data))
+         
+  # Remove NA values if there are any
+  indices <- indices[!is.na(indices)]
   
   # Filter the data to keep only the top genes
-  filtered_data <- data[top_features, ]
+  filtered_data <- data[, indices] 
   
   return(
     list(
