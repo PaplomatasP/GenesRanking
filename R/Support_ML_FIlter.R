@@ -9,16 +9,16 @@ train_model <- function(data, Labels, MLmethod) {
       min_child_weight = 1,
       subsample = 1
     )
-    model <-
-      train(
-        Labels ~ .,
-        data = data,
-        method = "xgbTree",
-        tuneGrid = tune_grid,
-        verbose = FALSE,
-        metric = "F",
-        verbosity = 0
-      )
+  model <- train(
+  Labels ~ .,
+  data = data,
+  method = "xgbTree",
+  tuneGrid = tune_grid,
+  verbose = FALSE,
+  metric = "Accuracy", # Changed from "F" to "Accuracy"
+  verbosity = 0
+)
+
   } else if (MLmethod == "rf") {
     model <- caret::train(
       Labels ~ .,
