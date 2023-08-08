@@ -124,12 +124,7 @@ ML_filter <- function(data,
     "xgbTree",
     "glmnet"
   )
-  
-  # Register parallel backend
-  #num_cores <- min(parallel::detectCores() - 1, 4)
-  #doParallel::registerDoParallel(parallel::makeCluster(num_cores))
-  
-  
+
   # Check if MLmethod is in MLlist
   if (!(MLmethod %in% MLlist)) {
     message("The specified ML method is not supported. Please use one of the following: ", paste(MLlist, collapse = ", "))
@@ -138,9 +133,17 @@ ML_filter <- function(data,
   if (MLmethod == "rpart") {
     colnames(data) <- make.names(colnames(data))
   }
+
+    # Register parallel backend
+
+  num_cores <- parallel::detectCores() - 4
+  cl <- parallel::makeCluster(num_cores)
+  doParallel::registerDoParallel(cl)
   
   model <- train_model(data, Labels, MLmethod)
   
+  parallel::stopCluster(cl)
+
   message("Model training, please wait!!!!")
   message("Training completed. Searching for the dominant genes!")
   
