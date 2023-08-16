@@ -136,13 +136,13 @@ ML_filter <- function(data,
 
     # Register parallel backend
 
-  num_cores <- parallel::detectCores() - 4
-  cl <- parallel::makeCluster(num_cores)
-  doParallel::registerDoParallel(cl)
+  #num_cores <- parallel::detectCores() - 4
+  #cl <- parallel::makeCluster(num_cores)
+  #doParallel::registerDoParallel(cl)
   
   model <- train_model(data, Labels, MLmethod)
   
-  parallel::stopCluster(cl)
+  #parallel::stopCluster(cl)
 
   message("Model training, please wait!!!!")
   message("Training completed. Searching for the dominant genes!")
