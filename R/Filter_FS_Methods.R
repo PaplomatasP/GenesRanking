@@ -42,12 +42,12 @@ Filter_FS_Methods <- function(data,
                               method,
                               LogTransformation = TRUE,
                               HighVariableFIlter = TRUE,
-                              n_features = 2000) {
+                              n_features) {
     # Filter lowly-expressed genes
  min_genes <-  nrow(data)/4
 min_cell_percentage <- 0.1
 keep_going <- TRUE
-
+if ( method == "WilcoxonTest" | method == "LikelihoodRatioTest" ){n_features=n_features+500}
 while (keep_going) {
   # Filter lowly-expressed genes
   min_cells <- ceiling(min_cell_percentage * ncol(data)) # At least min_cell_percentage of cells
