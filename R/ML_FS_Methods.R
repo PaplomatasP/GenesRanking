@@ -40,7 +40,7 @@ ML_FS_Methods <-
              method,
              LogTransformation = TRUE,
              HighVariableFIlter = TRUE,
-             n_features = 2000) {
+             n_features) {
   min_genes <- nrow(data)/4
   min_cell_percentage <- 0.1
   keep_going <- TRUE
