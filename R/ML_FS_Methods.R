@@ -41,30 +41,26 @@ ML_FS_Methods <-
              LogTransformation = TRUE,
              HighVariableFIlter = TRUE,
              n_features) {
-  min_genes <- nrow(data)/4
-  min_cell_percentage <- 0.1
-  keep_going <- TRUE
-  
-  while (keep_going) {
-    # Filter lowly-expressed genes
-    min_cells <- ceiling(min_cell_percentage * ncol(data)) # At least min_cell_percentage of cells
-    gene_counts <- rowSums(data > 0)
-    filtered_data <- data[gene_counts >= min_cells, ]
-    
-    # Check if we have at least nrow(data)/4 genes
-    if (nrow(filtered_data) >= min_genes) {
-      keep_going <- FALSE
-    } else {
-      # If not, reduce min_cell_percentage to keep more genes
-      min_cell_percentage <- min_cell_percentage - 0.01
-    }
-  }
-#if (n_features < min_genes){
-#      message("The number of genes ")
-   # }
         
-  # Set data to the filtered data
-  data <- filtered_data
+  min_genes <- nrow(data) / 2
+      min_cell_percentage <- 0.1
+      max_iterations <- 2 # loop times only 2 
+      
+      gene_counts <- rowSums(data > 0)
+      
+      for (i in 1:max_iterations) {
+        min_cells <- ceiling(min_cell_percentage * ncol(data))
+        filtered_data <- data[gene_counts >= min_cells, ]
+        
+        if (nrow(filtered_data) >= min_genes) {
+          break
+        } else {
+          min_cell_percentage <- min_cell_percentage - 0.04
+        }
+      }
+      
+      data <- filtered_data
+        
         if (HighVariableFIlter == TRUE) {
             seurat_obj <- Seurat::CreateSeuratObject(data)
             data_seurat <- Seurat::FindVariableFeatures(seurat_obj,
