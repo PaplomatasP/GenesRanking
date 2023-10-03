@@ -20,13 +20,27 @@ train_model <- function(data, Labels, MLmethod) {
 )
 
   } else if (MLmethod == "rf") {
-    model <- caret::train(
-      Labels ~ .,
-      data = data,
-      method = "rf",
-      tuneGrid = data.frame(.mtry = sqrt(ncol(data)-1)) # manually specify mtry for rf 
-      , ntree = 100
+  tune_grid <- expand.grid(
+      mtry = c(2, 3),               # Number of variables randomly sampled at each split
+      splitrule = c("extratrees"), # Splitting rule
+      min.node.size = c(10, 20, 30)
+      # Minimum number of samples in leaf nodes
     )
+    
+    # Train the model
+    model <- train(
+      labels ~ .,
+      data = data,
+      method = "ranger",
+      tuneGrid = tune_grid,
+      num.trees = 100,                # Number of trees
+      max.depth = 10,                # Maximum tree depth
+      replace = TRUE,                # Sample with replacement (bootstrap)
+      sample.fraction = 0.7,         # Fraction of samples used to train each tree
+      save.memory = TRUE,            # Reduce memory usage
+      verbose = FALSE
+    )
+    
   } else if (MLmethod == "glmnet") {
     
     tune_grid <- expand.grid(alpha = 0, # Ridge regression
