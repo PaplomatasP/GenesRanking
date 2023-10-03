@@ -24,7 +24,8 @@ train_model <- function(data, Labels, MLmethod) {
       Labels ~ .,
       data = data,
       method = "rf",
-      tuneGrid = data.frame(.mtry = sqrt(ncol(data)-1)) # manually specify mtry for rf
+      tuneGrid = data.frame(.mtry = sqrt(ncol(data)-1)) # manually specify mtry for rf 
+      , ntree = 100
     )
   } else if (MLmethod == "glmnet") {
     
