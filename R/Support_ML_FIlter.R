@@ -29,7 +29,7 @@ train_model <- function(data, Labels, MLmethod) {
     
     # Train the model
     model <- train(
-      labels ~ .,
+      Labels ~ .,
       data = data,
       method = "ranger",
       tuneGrid = tune_grid,
