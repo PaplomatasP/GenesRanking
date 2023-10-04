@@ -20,25 +20,22 @@ train_model <- function(data, Labels, MLmethod) {
 )
 
   } else if (MLmethod == "rf") {
-  tune_grid <- expand.grid(
-      mtry = c(2, 3),               # Number of variables randomly sampled at each split
-      splitrule = c("extratrees"), # Splitting rule
-      min.node.size = c(10, 20, 30)
-      # Minimum number of samples in leaf nodes
-    )
     
-    # Train the model
+  # Define the tuning grid
+    tune_grid <- expand.grid(mtry = c(2, 3))
+    
+    # Train the model using the randomForest method in caret
     model <- train(
       Labels ~ .,
       data = data,
-      method = "ranger",
+      method = "rf",
       tuneGrid = tune_grid,
-      num.trees = 100,                # Number of trees
+      ntree = 100,
       max.depth = 10,                # Maximum tree depth
       replace = TRUE,                # Sample with replacement (bootstrap)
       sample.fraction = 0.7,         # Fraction of samples used to train each tree
-      save.memory = TRUE,            # Reduce memory usage
-      verbose = FALSE
+      verbose = FALSE,
+      save.memory = TRUE
     )
     
   } else if (MLmethod == "glmnet") {
