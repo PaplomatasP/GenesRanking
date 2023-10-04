@@ -21,21 +21,18 @@ train_model <- function(data, Labels, MLmethod) {
 
   } else if (MLmethod == "rf") {
     
-  # Define the tuning grid
-    tune_grid <- expand.grid(mtry = c(2, 3))
-    
-    # Train the model using the randomForest method in caret
+     # Define the tuning grid
+    tune_grid <- expand.grid(mtry = c(3, 6))
+
+   # Train the model 
     model <- train(
       Labels ~ .,
       data = data,
       method = "rf",
       tuneGrid = tune_grid,
       ntree = 100,
-      max.depth = 10,                # Maximum tree depth
-      replace = TRUE,                # Sample with replacement (bootstrap)
-      sample.fraction = 0.7,         # Fraction of samples used to train each tree
-      verbose = FALSE,
-      save.memory = TRUE
+      nodesize = 10,  # Minimum size of terminal nodes
+      trace = FALSE   # Suppress messages
     )
     
   } else if (MLmethod == "glmnet") {
