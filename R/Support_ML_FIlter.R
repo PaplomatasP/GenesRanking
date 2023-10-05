@@ -1,9 +1,9 @@
 train_model <- function(data, Labels, MLmethod) {
   if (MLmethod == "xgbTree") {
     tune_grid <- expand.grid(
-      nrounds = c(50, 100, 150),
-      max_depth = c(1, 3, 5),
-      eta = c(0.1, 0.05),
+      nrounds = c(50, 100),
+      max_depth = c(1, 3),
+      eta = c(0.1),
       gamma = 0,
       colsample_bytree = 1,
       min_child_weight = 1,
