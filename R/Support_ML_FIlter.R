@@ -46,6 +46,22 @@ train_model <- function(data, Labels, MLmethod) {
       method = "glmnet",
       tuneGrid = tune_grid
     )
+  } else if (MLmethod == "gbm") {
+    
+    tuneGrid <- expand.grid(
+  n.trees = c(100),           # Use a single value, e.g., 500
+  interaction.depth = c(3),   # Use a single value, e.g., 3
+  shrinkage = c(0.1),         # Use a single value, e.g., 0.1
+  n.minobsinnode = c(10)      # Use a single value, e.g., 10
+)
+
+   
+    model <- caret::train(
+      Labels ~ .,
+      data = data,
+      method = "gbm",
+      tuneGrid = tuneGrid,
+    )
   } else if (MLmethod == "C5.0") {
     
     # Set up the parameter grid
