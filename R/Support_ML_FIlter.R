@@ -18,7 +18,6 @@ model <- train(
   method = "xgbTree",
   tuneGrid = tune_grid,
   metric = "Accuracy",
-  # Fixed hyperparameters can be moved here
   trControl = trainControl(verboseIter = FALSE) # Control verbosity
 )
 
