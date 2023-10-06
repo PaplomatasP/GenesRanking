@@ -2,7 +2,7 @@ train_model <- function(data, Labels, MLmethod) {
   if (MLmethod == "xgbTree") {
     # Only include hyperparameters that are being varied
 tune_grid <- expand.grid(
-  nrounds = c(50, 100),
+  nrounds = 50,
   max_depth = c(1, 3)
 )
 
