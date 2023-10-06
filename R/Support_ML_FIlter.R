@@ -1,22 +1,24 @@
 train_model <- function(data, Labels, MLmethod) {
   if (MLmethod == "xgbTree") {
-    tune_grid <- expand.grid(
-      nrounds = c(50, 100),
-      max_depth = c(1, 3),
-      eta = c(0.1),
-      gamma = 0,
-      colsample_bytree = 1,
-      min_child_weight = 1,
-      subsample = 1
-    )
-  model <- train(
+    # Only include hyperparameters that are being varied
+tune_grid <- expand.grid(
+  nrounds = c(50, 100),
+  max_depth = c(1, 3)
+)
+
+model <- train(
   Labels ~ .,
   data = data,
   method = "xgbTree",
   tuneGrid = tune_grid,
-  verbose = FALSE,
-  metric = "Accuracy", # Changed from "F" to "Accuracy"
-  verbosity = 0
+  metric = "Accuracy",
+  # Fixed hyperparameters can be moved here
+  trControl = trainControl(verboseIter = FALSE), # Control verbosity
+  eta = 0.1,
+  gamma = 0,
+  colsample_bytree = 1,
+  min_child_weight = 1,
+  subsample = 1
 )
 
   } else if (MLmethod == "rf") {
