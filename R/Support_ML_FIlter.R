@@ -3,7 +3,7 @@ train_model <- function(data, Labels, MLmethod) {
     # Only include hyperparameters that are being varied
 tune_grid <- expand.grid(
   nrounds = c(50),               
-  max_depth = c(1, 3),
+  max_depth = c(2),
   eta = c(0.1),                   # Constant value
   gamma = c(0),                   # Constant value
   colsample_bytree = c(1),        # Constant value
